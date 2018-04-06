@@ -40,7 +40,7 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 		"followupEvent":{
 			"name":"recommendBillCycle",
 			"data":{  
-				"acknowledge":"Thanks for the inputs.  We will send the bill copies to your registered email ID with us"											"
+				"acknowledge":"Thanks for the inputs.  We will send the bill copies to your registered email ID with us"
 			}
 		},			
 		"messages": [{
