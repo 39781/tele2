@@ -34,6 +34,28 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 		}
 	})
 	console.log(params);
+	responses.simpleResponse = function (){
+	return new Promise(function(resolve, reject){
+		resolve({			
+			"speech": "",
+			"followupEvent":{
+				"name":"createIncident",
+				"data":{  
+															
+				}
+			},			
+			"messages": [{
+			  "type": 0,
+			  "platform": "facebook",
+			  "speech": "Thanks for the inputs.  We will send the bill copies to your registered email ID with us"
+			},	
+			{
+			  "type": 0,
+			  "speech": ""
+			}]
+		});	
+	});
+	}
 	res.end();
 });
 module.exports = router;
