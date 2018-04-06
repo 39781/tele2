@@ -25,9 +25,15 @@ router.get('/chat', function(req, res) {
 
 router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authentication.BasicAuthentication, */function(req, res){
 	//console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
-	console.log('Dialogflow Request body: ' + JSON.stringify(req.body));	
-	console.log(req.body.result.parameters);
-	
+	console.log('Dialogflow Request body: ' + JSON.stringify(req.body));		
+	var contexts = req.body.result.contexts;
+	var params={};
+	contexts.forEach(function(context){
+		if(context.name == "billingcontext"){
+			params = context.parameters;
+		}
+	}
+	console.log(params);
 	res.end();
 });
 module.exports = router;
