@@ -38,7 +38,7 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 	var responseObj = {		
 		"speech": "",
 		"followupEvent":{
-			"name":"recoo",
+			"name":"recommendBillCycle",
 			"data":{  
 														
 			}
