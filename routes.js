@@ -49,12 +49,13 @@ var monthBillIntent = function(reqBody){
 	
 	return {		
 		"speech": "",
+		"displayText":"",
 		"followupEvent":{
 			"name":"recommendBillCycle",
 			"data":{  
 				"acknowledge":"Thanks for the inputs.  We will send the bill copies to your registered email ID with us"
 			}
-		}
+		},
 	};
 }
 
@@ -63,6 +64,7 @@ var recommendRomingCycle = function(reqBody){
 	switch(resolvedQuery.toLowerCase()){
 		case 'accept':return {		
 								"speech": "",
+								"displayText":"",
 								"followupEvent":{
 									"name":"otpIntent",
 									"data":{  
@@ -79,6 +81,7 @@ var recommendBillCycle = function(reqBody){
 	switch(resolvedQuery.toLowerCase()){
 		case 'accept':return {		
 								"speech": "",
+								"displayText":"",
 								"followupEvent":{
 									"name":"otpIntent",
 									"data":{  
@@ -95,6 +98,7 @@ var otpIntent = function(reqBody){
 		if(reqBody.result.parameters['source'] == 'recommendBillCycle'){
 			return {		
 				"speech": "",
+				"displayText":"",
 				"followupEvent":{
 					"name":"recommendRomingCycle",
 					"data":{  
@@ -105,6 +109,7 @@ var otpIntent = function(reqBody){
 		}else if(reqBody.result.parameters['source'] == 'recommendRomingCycle'){
 			return {		
 				"speech": "",
+				"displayText":"",
 				"followupEvent":{
 					"name":"finalIntent",
 					"data":{  
