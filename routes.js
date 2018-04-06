@@ -56,6 +56,10 @@ var monthBillIntent = function(reqBody){
 				"acknowledge":"Thanks for the inputs.  We will send the bill copies to your registered email ID with us"
 			}
 		},
+		"messages": [{
+			  "type": 0,
+			  "speech": ""
+			}]
 	};
 }
 
