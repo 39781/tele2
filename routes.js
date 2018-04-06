@@ -25,7 +25,8 @@ router.get('/chat', function(req, res) {
 
 router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authentication.BasicAuthentication, */function(req, res){
 	//console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
-	console.log('Dialogflow Request body: ' + JSON.stringify(req.body));		
+	console.log('Dialogflow Request body: ' + JSON.stringify(req.body));	
+		var intentName = req.body.result.metadata.intentNasme;
 	switch(intentName){
 		case 'monthBillIntent':func = monthBillIntent;break;
 		case 'recommendBillCycle': func = recommendBillCycle;break; 
