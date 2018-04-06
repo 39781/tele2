@@ -32,7 +32,7 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 		if(context.name == "billingcontext"){
 			params = context.parameters;
 		}
-	}
+	})
 	console.log(params);
 	res.end();
 });
