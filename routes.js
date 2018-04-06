@@ -32,7 +32,7 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 	switch(intentName){
 		case 'monthBillIntent':func = monthBillIntent;break;
 		case 'recommendBillCycle': func = recommendBillCycle;break; 
-		case 'recommendRomingPack':func = recommendRomingPack;break;
+		case 'recommendRomingCycle':func = recommendRomingCycle;break;
 	}		
 	res.json(func(req.body)).end();
 });
@@ -61,7 +61,7 @@ var monthBillIntent = function(reqBody){
 var recommendRomingCycle = function(reqBody){
 	var resolvedQuery = reqBody.result.resolvedQuery;
 	switch(resolvedQuery.toLowerCase()){
-		case 'accept':var responseObj = {		
+		case 'accept':return {		
 								"speech": "",
 								"followupEvent":{
 									"name":"otpIntent",
@@ -69,7 +69,7 @@ var recommendRomingCycle = function(reqBody){
 										"source":"recommendRomingCycle"
 									}
 								}
-							};
+							};break;
 		case 'ignore':
 	}
 }
@@ -77,7 +77,7 @@ var recommendRomingCycle = function(reqBody){
 var recommendBillCycle = function(reqBody){
 	var resolvedQuery = reqBody.result.resolvedQuery;
 	switch(resolvedQuery.toLowerCase()){
-		case 'accept':var responseObj = {		
+		case 'accept':return {		
 								"speech": "",
 								"followupEvent":{
 									"name":"otpIntent",
@@ -85,9 +85,10 @@ var recommendBillCycle = function(reqBody){
 										"source":"recommendBillCycle"
 									}
 								}
-							};
+							};break;
 		case 'ignore':
 	}
+	
 }
 var otpIntent = function(reqBody){
 	if(reqBody.result.parameters['otp'] == '88888'){
