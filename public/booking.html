@@ -1,0 +1,269 @@
+<html>
+<head>
+<link rel="stylesheet" id="all-css-0" href="css/style.css?m=1521754553g" type="text/css" media="all">
+<script src="js/lib/jquery.min.js"></script>
+</head>
+<body>
+
+	<h2 style="text-align:center"> seat booking</h2>
+	<section class="container">
+	<div  class="theCard">
+	<figure class="theCardFront">		
+		<div id="holder"> 
+			<table  id="place">
+			</table>    
+		</div>
+		<div style="display: inline-block;width: 50%;">
+		<div>
+			<table id="custInfo"><tr><td>Name</td><td>-&nbsp;<span id="name">Hari</span></td></tr><tr><td>Phone</td><td>-&nbsp;<span id="phno">8500050085</span></td></tr><tr><td>Date-time</td><td>-&nbsp;<span id="date">25-04-2018</span></td></tr><tr><td>From</td><td>-&nbsp;<span id="from">Hyd</span></td></tr><tr><td>To</td><td>-&nbsp;<span id="to">Che</span></td></tr><tr><td>Bus</td><td>-&nbsp;<span id="bustype">Exp</span></td></tr>
+			<tr><td>Fare</td><td>-&nbsp;<span id="fare">500</span></td></tr><tr><td>Total Tickets</td><td>-&nbsp;<span id="totTicks">0</span></td></tr><tr><td>Total Cost</td><td>-Rs&nbsp;<span id="tcost">0</span></td></tr></table>
+		</div>
+		<div style="float:left;"> 
+			<ul id="seatDescription">
+				<li style="background:url('images/available_seat_img.gif') no-repeat scroll 0 0 transparent;">Available Seat</li>
+				<li style="background:url('images/booked_seat_img.gif') no-repeat scroll 0 0 transparent;">Booked Seat</li>
+				<li style="background:url('images/selected_seat_img.gif') no-repeat scroll 0 0 transparent;">Selected Seat</li>
+			</ul>
+		</div>
+		<div style="clear:both;">
+			<input type="button" id="bookSeat" value="Book" class="flip pay"/>
+			<input type="button" id="cancel" value="Cancel" class="pay"/>           
+		</div>	
+		</div>			
+		</figure>										
+				<figure class="theCardBack">
+					<div class="instructionsCards">
+						<div class="variousCards">
+							<img class="visa cardImg" src="images/visa.png"/>
+							<img class="discover cardImg" src="images/discover.jpg"/>
+							<img class="mastercard cardImg" src="images/mastercard.png"/>
+							<img class="amex cardImg" src="images/amex.jpg"/>
+						</div>
+					</div>					
+					<br class="clear" />
+					<div class="cardNumber">Card Number:<br/>
+						<input class="firstfour" placeholder="1111" maxlength="4"/>
+						<input placeholder="2222" maxlength="4" />
+						<input placeholder="3333" maxlength="4" />
+						<input placeholder="4444" maxlength="4" />
+					</div>
+					<div class="cardExpiration">Expiration Date:<br/>
+						<input class="month" placeholder="Mo" maxlength="2"/> / <input class="year" placeholder="Year" maxlength="4"/>
+					</div>
+					<div class="cardSecurity">Security Code:<br/>
+						<input class="csc" placeholder="CSC" maxlength="4"/>
+						<small><span class="tooltip">What's this?</span><span class="help">Lorem ipsum dolor sit ame</span></small>
+					</div>
+					<br class="clear">
+					<input type="button" value="Pay Now" class="pay" id="payNow"/>
+					<input type="button" value="Cancel" class="pay flip" id="payCancel"/>
+					<input type="button" value="Pay by Paytm" class="pay" id="paytmPay"/>
+				  </figure>	
+			</div>				  
+		</section>		
+	</body>
+<script>
+
+	var settings = {
+	   rows: 15,
+	   cols: 6,
+	   rowCssPrefix: 'row-',
+	   colCssPrefix: 'col-',
+	   seatWidth: 15,
+	   seatHeight: 15,
+	   seatCss: 'seat',
+	   selectedSeatCss: 'selectedSeat',
+	   selectingSeatCss: 'selectingSeat'
+   };   
+   var init = function (reservedSeat) {		
+		var seating = [], seatNo=0, className;		
+		for (i = 0; i < settings.rows; i++) {
+			seating.push("<tr>");
+			for (j = 0; j < settings.cols; j++) {
+				//seatNo = (i + j * settings.rows + 1);
+				if(j==2&&i<settings.rows-1) {
+					seating.push('<td width=15;></td>');
+				}else{
+					seatNo++;
+					className = settings.seatCss + ' ' + settings.rowCssPrefix + i.toString() + ' ' + settings.colCssPrefix + j.toString();
+					if ($.isArray(reservedSeat) && $.inArray(seatNo.toString(), reservedSeat) != -1) {						
+						className += ' ' + settings.selectedSeatCss;
+					}				
+					seating.push('<td class="' + className + '"' +
+						  'style="top:' + (i * settings.seatHeight).toString() + 'px;left:' + (j * settings.seatWidth).toString() + 'px">' +
+						  '<a title="' + seatNo + '">' + seatNo + '</a>' +
+						  '</td>');
+				}
+			}
+			seating.push("</tr>");
+		}				
+		$('#place').html(seating.join(''));
+	};
+	//case I: Show from starting
+	//init();
+
+	//Case II: If already booked
+	var url_string = window.location.href; //window.location.href
+	var url = new URL(url_string);
+	var name = url.searchParams.get("name");
+	var phno = url.searchParams.get("phone");
+	var dat = url.searchParams.get("date");
+	var from = url.searchParams.get("from");
+	var to =  url.searchParams.get("to");
+	var bustype = url.searchParams.get("bustype");
+	var fare = url.searchParams.get("fare");
+	$('#name').html(name),
+	$('#phno').html(phno),
+	$('#from').html(from),
+	$('#date').html(dat),
+	$('#to').html(to),
+	$('#fare').html(fare),		
+	$('#bustype').html(bustype),
+	seatBookingUrl = 'https://fast-reef-26757.herokuapp.com/getBookedSeats/'+from+'/'+to+'/'+bustype+'/'+dat;
+	var bookedSeats = [];	
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {		
+		if (this.readyState == 4 && this.status == 200) {			
+			var seatsInfo = JSON.parse(this.responseText);							
+			console.log(seatsInfo.bookedseats);
+			init(seatsInfo.bookedseats);
+			loadJQueryEvents();
+		}
+	};
+	xhr.open('GET', seatBookingUrl,true);	
+	xhr.send();
+	console.log(settings.seatCss);
+	function loadJQueryEvents(){
+		$(document).ready(function(){
+			$('.' + settings.seatCss).click(function () {				
+				if ($(this).hasClass(settings.selectedSeatCss)){
+					alert('This seat is already reserved');
+				}
+				else{
+					$('#totTicks').html(parseInt($('#totTicks').html())+1);
+					$('#tcost').html(parseInt($('#fare').html())*parseInt($('#totTicks').html()));
+					$(this).toggleClass(settings.selectingSeatCss);
+				}
+			});
+		 
+			$('#cancel').click(function () {
+				var str = [];
+				$.each($('#place td.' + settings.selectedSeatCss + ' a, #place td.'+ settings.selectingSeatCss + ' a'), function (index, value) {
+					str.push($(this).attr('title'));
+				});			
+				alert(str.join(','));
+			})			 
+			$('#payNow').click(function () {
+				var str = [], item;
+				$.each($('#place td.' + settings.selectingSeatCss + ' a'), function (index, value) {
+					item = $(this).attr('title');                   
+					str.push(item);                   
+				});
+				var dataObj = {
+					name : $('#name').html(),
+					phone : $('#phno').html(),
+					source: $('#from').html(),
+					date :$('#date').html(),
+					dest : $('#to').html(),
+					fare : $('#fare').html(),
+					totTics : $('#totTicks').html(),
+					tcost : $('#tcost').html(),
+					bustype:$('#bustype').html(),
+					bookedSeats:str
+				}			
+				$.ajax({
+					type: "POST",
+					url: "/paymentGateway",
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",				
+					data: JSON.stringify(dataObj),
+					success: function(response) {
+						//window.location.href = response.redirectUrl;
+						xhr.onreadystatechange = function() {		
+							if (this.readyState == 4 && this.status == 200) {			
+								$('.theCardBack').html(this.responseText);
+								  var ul = window.opener.document.getElementById('msg_container');
+								  cardBody = '<li class="list-group-item background-color-custom animated fadeInLeft"><div class="pmd-card pmd-card-default pmd-z-depth custom-infocard"><div class="pmd-card-title"><p class="card-title"> transaction Id : '+response.transactionCode+'</p> <p class="card-subtitle">'+response.responseMsg+', please note transaction id for future reference </p>'+this.responseText+' </div></div><div><p class="bot-res-timestamp-card">	<small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src="avatar/vfslogo.png"/>'+currentTime()+'</small></p></div></li>'
+								  $(ul).append(cardBody);
+								  //var li = document.createElement("li");
+								  //li.appendChild(document.createTextNode(this.responseText));
+								  //ul.appendChild(li);								 
+								 window.close();								
+							}
+						};
+						xhr.open('GET', response.redirectUrl,true);	
+						xhr.send();
+					},
+					error: function(err) {
+						console.log(err);
+					}
+				});			
+					//$('#place').hide();
+				//alert(str.join(','));
+			});
+			$('#paytmPay').click(function () {
+				var str = [], item;
+				$.each($('#place td.' + settings.selectingSeatCss + ' a'), function (index, value) {
+					item = $(this).attr('title');                   
+					str.push(item);                   
+				});
+				var dataObj = {
+					name : $('#name').html(),
+					phone : $('#phno').html(),
+					source: $('#from').html(),
+					date :$('#date').html(),
+					dest : $('#to').html(),
+					fare : $('#fare').html(),
+					totTics : $('#totTicks').html(),
+					tcost : $('#tcost').html(),
+					bustype:$('#bustype').html(),
+					bookedSeats:str
+				}			
+				$.ajax({
+					type: "POST",
+					url: "/paytmTxn",
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",				
+					data: JSON.stringify(dataObj),
+					success: function(response) {
+						alert('response came');
+						document.write(response);
+					},
+					error: function(err) {
+						document.write(err.responseText);
+					}
+				});			
+					//$('#place').hide();
+				//alert(str.join(','));
+			});
+			$('.firstfour').change(function() {
+				$('.cardImg').removeClass('active');
+				var card = $('.firstfour').val();
+				var firstNumber = card.substr(0,1);
+				switch(firstNumber) {
+				  case '4': $('.visa').addClass('active');
+					  break;
+				  case '3':     $('.amex').addClass('active');
+					  break;
+				  case '5': $('.mastercard').addClass('active');
+					  break;
+				  case '6':  $('.discover').addClass('active');
+					  break;
+				}
+			});
+			$('.flip').click(function(){
+			  $('.theCard').toggleClass('flipped');
+			});
+		});		
+	}
+	function currentTime(){
+        var currentDate = new Date();
+        var hours = (currentDate.getHours() < 10) ? '0' + currentDate.getHours() : currentDate.getHours();
+        var minutes = (currentDate.getMinutes() < 10) ? '0' + currentDate.getMinutes() : currentDate.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+
+        return `${hours}:${minutes} ${ampm}`;
+    };
+	
+</script>
+</html>

@@ -1,0 +1,33 @@
+<html>
+<head>
+<script src="js/lib/jquery.min.js"></script>
+<title>Merchant Check Out Page</title>
+</head>
+<body>
+<script type="text/javascript">
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {		
+		if (this.readyState == 4 && this.status == 200) {			
+			$('.theCardBack').html(this.responseText);
+			  var ul = window.opener.document.getElementById('msg_container');
+			  cardBody = '<li class="list-group-item background-color-custom animated fadeInLeft"><div class="pmd-card pmd-card-default pmd-z-depth custom-infocard"><div class="pmd-card-title"><p class="card-title"> transaction Id : <%=orderId%></p> <p class="card-subtitle">Transaction success, please note transaction id for future reference </p>'+this.responseText+' </div></div><div><p class="bot-res-timestamp-card">	<small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src="avatar/vfslogo.png"/>'+currentTime()+'</small></p></div></li>'
+			  $(ul).append(cardBody);
+			  //var li = document.createElement("li");
+			  //li.appendChild(document.createTextNode(this.responseText));
+			  //ul.appendChild(li);								 
+			 window.close();								
+		}
+	};
+	xhr.open('GET', 'https://fast-reef-26757.herokuapp.com/ticket?transCode=<%=orderId%>',true);	
+	xhr.send();
+	function currentTime(){
+        var currentDate = new Date();
+        var hours = (currentDate.getHours() < 10) ? '0' + currentDate.getHours() : currentDate.getHours();
+        var minutes = (currentDate.getMinutes() < 10) ? '0' + currentDate.getMinutes() : currentDate.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+
+        return `${hours}:${minutes} ${ampm}`;
+    };
+</script>    					
+</body>
+</html>
