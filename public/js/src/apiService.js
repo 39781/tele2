@@ -23,7 +23,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 				"payload": userInput,
 				"senderName": config.userTitle,
 				"senderAvatar": config.userAvatar,
-				"bottomIcon":false,
+				"bottomIcon":true,
 				"time": utils.currentTime(),
 				"className": 'pull-right'
 			}));
