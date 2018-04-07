@@ -33,6 +33,7 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 		case 'monthBillIntent':func = monthBillIntent;break;
 		case 'recommendBillCycle': func = recommendBillCycle;break; 
 		case 'recommendRomingCycle':func = recommendRomingCycle;break;
+		case 'recommendBillConfirmation':func = recommendBillConfirmation;break;
 	}		
 	res.json(func(req.body)).end();
 });
@@ -53,7 +54,8 @@ var monthBillIntent = function(reqBody){
 		"followupEvent":{
 			"name":"recommendBillCycle",
 			"data":{  
-				"acknowledge":"Thanks for the inputs.  We will send the bill copies to your registered email ID with us"
+				"acknowledge":"Thanks for the inputs.  We will send the bill copies to your registered email ID with us",
+				"mobile":params.mobile
 			}
 		},
 		"messages": [{
@@ -96,6 +98,20 @@ var recommendBillCycle = function(reqBody){
 		case 'ignore':
 	}
 	
+}
+var recommendBillConfirmation = function(reqBody){
+	var contexts = reqBody.result.contexts;
+	console.log(contexts);
+	return {		
+		"speech": "",
+		"displayText":"",
+		"followupEvent":{
+			"name":"otpIntent",
+			"data":{  
+				"source":"recommendBillCycle"
+			}
+		}
+	};
 }
 var otpIntent = function(reqBody){
 	if(reqBody.result.parameters['otp'] == '88888'){
