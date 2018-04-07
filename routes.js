@@ -138,7 +138,7 @@ var otpIntent = function(reqBody){
 				"followupEvent":{
 					"name":"recommendRomingCycle",
 					"data":{  
-						"source":"Thanks for confirmation.  Change will be effected from next billing cycle  onwards"
+						"acknowledge":"Thanks for confirmation.  Change will be effected from next billing cycle  onwards"
 					}
 				}
 			};
@@ -149,7 +149,7 @@ var otpIntent = function(reqBody){
 				"followupEvent":{
 					"name":"finalIntent",
 					"data":{  
-						"source":"Thanks for confirmation.  Change will be effected from next billing cycle  onwards"
+						"acknowledge":"Thanks for confirmation.  Change will be effected from next billing cycle  onwards"
 					}
 				}
 			};
