@@ -56,6 +56,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 					let isReceipt=false;
 					let receiptData=null;
 					let isLogOut=false;
+					let bottomFlag = false;
 					let logoutData=null;
 					let listData=null;
 					let login=null;
@@ -81,12 +82,17 @@ function($, config, utils, messageTpl, cards, uuidv1){
 						if(response.result.fulfillment.messages){
 							for(let i in response.result.fulfillment.messages){
 								console.log('length',i);
+								bottomFlag = false;
+								if(i == response.result.fulfillment.messages.length-1){
+									bottomFlag = true;
+								}
 								if(response.result.fulfillment.messages[i].type == 0 ){
 									let cardHTML = cards({
 										"payload": response.result.fulfillment.messages[i].speech,
 										"senderName": config.botTitle,
 										"senderAvatar": config.botAvatar,
 										"time": utils.currentTime(),
+										"bottomIcon":bottomFlag,
 										"className": ''
 									}, "plaintext");
 									callback(null, cardHTML);
@@ -162,6 +168,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderName": config.botTitle,
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
+								"bottomIcon":bottomFlag,
 								"className": ''
 							}, "plaintext");
 							callback(null, cardHTML);
@@ -175,6 +182,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderName": config.botTitle,
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
+								"bottomIcon":bottomFlag,
 								"buttons":hasbutton,
 								"className": ''
 							}, "card");
@@ -188,6 +196,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 									"senderAvatar": config.botAvatar,
 									"time": utils.currentTime(),
 									"buttons":hasbutton,
+									"bottomIcon":bottomFlag,
 									"className": ''
 								
 							}, "carousel");
@@ -206,6 +215,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderName": config.botTitle,
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
+								"bottomIcon":bottomFlag,
 								"className": ''
 						}, "quickreplies");
 						callback(null, cardHTML);
@@ -217,6 +227,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderName": config.botTitle,
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
+								"bottomIcon":bottomFlag,
 								"className": ''
 						}, "quickreplyfromapiai");
 						callback(null, cardHTML);
@@ -227,6 +238,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderName": config.botTitle,
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
+								"bottomIcon":bottomFlag,
 								"className": ''
 						}, "video");
 						callback(null, cardHTML);
@@ -237,6 +249,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderName": config.botTitle,
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
+								"bottomIcon":bottomFlag,
 								"className": ''
 						}, "audio");
 						callback(null, cardHTML);
@@ -247,6 +260,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderName": config.botTitle,
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
+								"bottomIcon":bottomFlag,
 								"className": ''
 						}, "file");
 						callback(null, cardHTML);
@@ -257,6 +271,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 							"payload": listData,
 							"senderName": config.botTitle,
 							"senderAvatar": config.botAvatar,
+							"bottomIcon":bottomFlag,
 							"time": utils.currentTime(),
 							"className": ''
 						}, "list");
@@ -268,6 +283,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 							"senderName": config.botTitle,
 							"senderAvatar": config.botAvatar,
 							"time": utils.currentTime(),
+							"bottomIcon":bottomFlag,
 							"className": ''
 						}, "receipt");
 						callback(null, cardHTML);
@@ -279,6 +295,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 							"senderName": config.botTitle,
 							"senderAvatar": config.botAvatar,
 							"time": utils.currentTime(),
+							"bottomIcon":bottomFlag,
 							"className": '',
 							"isWeb":$('#webchat').context.URL
 						}, "logout");
@@ -291,6 +308,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 							"senderName": config.botTitle,
 							"senderAvatar": config.botAvatar,
 							"time": utils.currentTime(),
+							"bottomIcon":bottomFlag,
 							"className": '',
 							"isWeb":$('#webchat').context.URL
 						}, "webview");
@@ -302,6 +320,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 							"payload": login,
 							"senderName": config.botTitle,
 							"senderAvatar": config.botAvatar,
+							"bottomIcon":bottomFlag,
 							"time": utils.currentTime(),
 							"className": '',
 							"isWeb":$('#webchat').context.URL

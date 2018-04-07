@@ -18,12 +18,11 @@ define(["utils","settings"], function (utils,settings) {
 
             <div class="media-body user-txt-space">
 
-                <p class="list-group-item-text-user">${data.payload}</p>
-                <p class="user-timestamp"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.userAvatar}'/>${data.time}</small></p>
-
-            </div>
-
-        </li>`;
+                <p class="list-group-item-text-user">${data.payload}</p>`;
+                if(data.bottomIcon){
+					html+=`<p class="user-timestamp"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.userAvatar}'/>${data.time}</small></p>`;
+				}
+            html+=`</div></li>`;
 
         return html;
     }
@@ -34,10 +33,11 @@ define(["utils","settings"], function (utils,settings) {
 
             <div class="media-body bot-txt-space animated fadeInLeft">
 
-                <p class="list-group-item-text-bot">${data.payload}</p>
-                <p class="bot-res-timestamp"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p>
-
-            </div>
+                <p class="list-group-item-text-bot">${data.payload}</p>`
+				if(data.bottomIcon){
+					html+=`<p class="bot-res-timestamp"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p>`;
+				}
+            html+=`</div>
 
 
         </li>`;
@@ -83,7 +83,11 @@ define(["utils","settings"], function (utils,settings) {
                 }
                 cardButtons += `</div>`
             }
-            html = cardBody + cardButtons + `</div></div><p class="bot-res-timestamp-card"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p></div></li>`;
+            html = cardBody + cardButtons + `</div></div>`;
+			if(data.bottomIcon){
+				html+=`<p class="bot-res-timestamp-card"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p>`
+			}
+			html+=`</div></li>`;
         }
         return html;
     }
@@ -116,7 +120,11 @@ define(["utils","settings"], function (utils,settings) {
                 }
             }
         }		
-        quickRepliesHtml += `</div><p class="bot-res-timestamp-qr"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p></div></li>`
+        quickRepliesHtml += `</div>`;
+		if(data.bottomIcon){
+			quickRepliesHtml+=`<p class="bot-res-timestamp-qr"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p>`;
+		}
+		quickRepliesHtml+=`</div></li>`
         return quickRepliesHtml;
     }
 	methods.quickrepliesfromapiai =(data)=>{
@@ -145,7 +153,11 @@ define(["utils","settings"], function (utils,settings) {
 				}
             }
         }
-        apiquickRepliesHtml +=`</div><p class="bot-res-timestamp-qr"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p></div></li>`
+        apiquickRepliesHtml +=`</div>`;
+		if(data.bottomIcon){
+			apiquickRepliesHtml+= `<p class="bot-res-timestamp-qr"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p>`;
+		}
+		apiquickRepliesHtml +=`</div></li>`;
         return apiquickRepliesHtml;
     }
     methods.carousel = (data, uniqueId) => {
@@ -205,7 +217,11 @@ define(["utils","settings"], function (utils,settings) {
         <span class="sr-only">Previous</span></a>
 		<a data-slide="next" href="#${uniqueId}" class="right carousel-control custom-carousel-right"><span class="icon-next" aria-hidden="true"></span>
         <span class="sr-only">Next</span></a>
-	  </div><!--.Carousel--></div><p style="bottom: 10px;" class="bot-res-timestamp-card"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p></div></li>`;
+	  </div><!--.Carousel--></div>`;
+	  if(data.bottomIcon){
+		carousel+=`<p style="bottom: 10px;" class="bot-res-timestamp-card"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p>`;
+	  }
+	  carousel+=`</div></li>`;
 
         return carousel;
     }
@@ -237,7 +253,11 @@ define(["utils","settings"], function (utils,settings) {
          
     </li>`;
             }
-            html += `</ul><p class="bot-res-timestamp-qr"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p></li>`;
+            html += `</ul>`;
+			if(data.bottomIcon){
+				html+=`<p class="bot-res-timestamp-qr"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p>`;
+			}
+			html+=`</li>`;
         }
         return listBody + html;
     }
@@ -272,7 +292,11 @@ define(["utils","settings"], function (utils,settings) {
                 }
                 cardButtons += `</div>`
             }
-            html = cardBody + cardButtons + `</div></div><p class="bot-res-timestamp-card"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p></div></li>`;
+            html = cardBody + cardButtons + `</div></div>`;
+			if(data.bottomIcon){
+				html+=`<p class="bot-res-timestamp-card"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p>`;
+			}
+			html+=`</div></li>`;
         
         return html;
     }
