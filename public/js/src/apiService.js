@@ -80,6 +80,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 					}else{
 						if(response.result.fulfillment.messages){
 							for(let i in response.result.fulfillment.messages){
+								console.log('length',i);
 								if(response.result.fulfillment.messages[i].type == 0 ){
 									let cardHTML = cards({
 										"payload": response.result.fulfillment.messages[i].speech,
