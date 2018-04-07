@@ -34,7 +34,7 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 		case 'recommendBillCycle': func = recommendBillCycle;break; 
 		case 'recommendRomingCycle':func = recommendRomingCycle;break;
 		case 'recommendBillConfirmation':func = recommendBillConfirmation;break;
-		case 'recommendRoamingConfirmation':func = recommendRoamingConfirmation;break;
+		case 'recommendRomingConfirmation':func = recommendRomingConfirmation;break;
 		case 'otpIntent':func = otpIntent;break;
 	}		
 	res.json(func(req.body)).end();
