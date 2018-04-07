@@ -149,7 +149,7 @@ var otpIntent = function(reqBody){
 				"followupEvent":{
 					"name":"finalIntent",
 					"data":{  
-						"acknowledge":"Thanks for confirmation.  Change will be effected from next billing cycle  onwards"
+						"finalMessage":"Thanks for confirmation.  Change will be effected from next billing cycle  onwards"
 					}
 				}
 			};
