@@ -34,6 +34,7 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 		case 'recommendBillCycle': func = recommendBillCycle;break; 
 		case 'recommendRomingCycle':func = recommendRomingCycle;break;
 		case 'recommendBillConfirmation':func = recommendBillConfirmation;break;
+		case 'recommendRoamingConfirmation':func = recommendRoamingConfirmation;break;
 		case 'otpIntent':func = otpIntent;break;
 	}		
 	res.json(func(req.body)).end();
@@ -66,7 +67,7 @@ var monthBillIntent = function(reqBody){
 	};
 }
 
-var recommendRomingCycle = function(reqBody){
+var recommendRomingConfirmation = function(reqBody){
 	var resolvedQuery = reqBody.result.resolvedQuery;
 	switch(resolvedQuery.toLowerCase()){
 		case 'accept':return {		
@@ -83,7 +84,7 @@ var recommendRomingCycle = function(reqBody){
 	}
 }
 
-var recommendBillCycle = function(reqBody){
+var recommendBillConfirmation = function(reqBody){
 	var resolvedQuery = reqBody.result.resolvedQuery;
 	switch(resolvedQuery.toLowerCase()){
 		case 'accept':return {		
@@ -100,7 +101,7 @@ var recommendBillCycle = function(reqBody){
 	}
 	
 }
-var recommendBillConfirmation = function(reqBody){
+/*var recommendBillConfirmation = function(reqBody){
 	var contexts = reqBody.result.contexts;
 	console.log(contexts);
 	return {		
@@ -114,6 +115,20 @@ var recommendBillConfirmation = function(reqBody){
 		}
 	};
 }
+var recommendBillConfirmation = function(reqBody){
+	var contexts = reqBody.result.contexts;
+	console.log(contexts);
+	return {		
+		"speech": "",
+		"displayText":"",
+		"followupEvent":{
+			"name":"otpIntent",
+			"data":{  
+				"source":"recommendBillCycle"
+			}
+		}
+	};
+}*/
 var otpIntent = function(reqBody){
 	if(reqBody.result.parameters['otp'] == '88888'){
 		if(reqBody.result.parameters['source'] == 'recommendBillCycle'){
