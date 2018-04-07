@@ -93,7 +93,7 @@ var recommendBillConfirmation = function(reqBody){
 								"followupEvent":{
 									"name":"otpIntent",
 									"data":{  
-										"source":"recommendBillCycle"
+										"source":"recommendRomingCycle"
 									}
 								}
 							};break;
