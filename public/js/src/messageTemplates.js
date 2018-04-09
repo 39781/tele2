@@ -37,8 +37,8 @@ define(["utils","settings"], function (utils,settings) {
                 <p class="list-group-item-text-bot${data.color}">`;
 				
 				
-				if(data.payload.indexOf("I have recommendation for you")>=0){
-					data.payload= data.payload.replace("I have recommendation for you","");
+				if(data.payload.indexOf("I have a recommendation for you")>=0){
+					data.payload= data.payload.replace("I have a recommendation for you","");
 					data.payload = data.payload.replace("We recommend","<br>We recommend");
 					html +=`I have recommendation for you<br>`;	
 					html+=data.payload;
@@ -162,8 +162,8 @@ define(["utils","settings"], function (utils,settings) {
             if(qReply[i].platform =="facebook" && qReply[i].type == "2"){				
                 apiquickRepliesHtml +=`<p class="list-group-item-quick-reply-space${data.color}">`;
 								
-				if(qReply[i].title.indexOf("I have recommendation for you")>=0){
-					qReply[i].title = qReply[i].title.replace("I have recommendation for you","");
+				if(qReply[i].title.indexOf("I have a recommendation for you")>=0){
+					qReply[i].title = qReply[i].title.replace("I have a recommendation for you","");
 					apiquickRepliesHtml +=`I have recommendation for you<br>${qReply[i].title}`;	
 				}else{
 					apiquickRepliesHtml +=`${qReply[i].title}`;	
