@@ -138,7 +138,7 @@ var recommendRomingConfirmation = function(reqBody, otpMsg){
 					"followupEvent":{
 						"name":"finalIntent",
 						"data":{  
-							"finalMessage":""
+							"finalMessage":" "
 						}
 					}
 				};break;
@@ -174,7 +174,7 @@ var recommendBillConfirmation = function(reqBody){
 					"followupEvent":{
 						"name":"finalIntent",
 						"data":{  
-							"finalMessage":""
+							"finalMessage":" "
 						}
 					}
 				};break;
