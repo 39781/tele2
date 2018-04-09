@@ -140,7 +140,7 @@ var recommendBillConfirmation = function(reqBody){
 									"name":"otpIntent",
 									"data":{  
 										"msg":"We have sent an OTP on your mobile no.  Please enter it",
-										"source":"recommendRomingCycle"
+										"source":"recommendBillCycle"
 									}
 								}
 							};break;
