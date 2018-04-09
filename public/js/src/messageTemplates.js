@@ -34,7 +34,17 @@ define(["utils","settings"], function (utils,settings) {
 
             <div class="media-body bot-txt-space animated fadeInLeft">
 				
-                <p class="list-group-item-text-bot${data.color}">${data.payload}</p>`
+                <p class="list-group-item-text-bot${data.color}">`;
+				
+				
+				if(data.payload.indexOf("I have recommendation for you")>=0){
+					data.payload= data.payload.replace("I have recommendation for you","");
+					html +=`I have recommendation for you<br><br>${data.payload}`;	
+				}else{
+					html +=`${data.payload}`;	
+				}		
+				
+				html+=`</p>`;
 				if(data.bottomIcon){
 					html+=`<p class="bot-res-timestamp"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p>`;
 				}
@@ -149,7 +159,15 @@ define(["utils","settings"], function (utils,settings) {
         for(let i in qReply){
             if(qReply[i].platform =="facebook" && qReply[i].type == "2"){
 				qReply[i].title = qReply[i].title.replace("I have recommendation for you","I have recommendation for you<br><br>");
-                apiquickRepliesHtml +=`<p class="list-group-item-quick-reply-space${data.color}">${qReply[i].title}</p><div class="quick-replies-buttons">`
+                apiquickRepliesHtml +=`<p class="list-group-item-quick-reply-space${data.color}">`;
+								
+				if(qReply[i].title.indexOf("I have recommendation for you")>=0){
+					qReply[i].title = qReply[i].title.replace("I have recommendation for you","");
+					apiquickRepliesHtml +=`I have recommendation for you<br><br>${qReply[i].title}`;	
+				}else{
+					apiquickRepliesHtml +=`${qReply[i].title}`;	
+				}				
+				apiquickRepliesHtml +=`</p><div class="quick-replies-buttons">`
 				for(let j=0;j<qReply[i].replies.length;j++){
 					apiquickRepliesHtml +=`<button type="button"  class="btn pmd-btn-outline pmd-ripple-effect btn-info .pmd-btn-fab apiQuickreplybtnPayload" data-apiquickRepliesPayload="${qReply[i].replies[j]}">${qReply[i].replies[j]}</button>`
 				}
