@@ -1,6 +1,6 @@
 var nodemailer = require('nodemailer');
 var mailer = {
-	sendMail:function(toAddress, month, mainContent){
+	sendMail:function(toAddress, month, mainContent,attachmentFile){
 		return new Promise(function(resolve, reject){
 			var transporter = nodemailer.createTransport({
 				service: 'gmail',
@@ -14,7 +14,13 @@ var mailer = {
 			  from: 'hexatestmailer@gmail.com',
 			  to: 'BH@hexaware.com',
 			  subject: month + ' month bill',
-			  text: mainContent
+			  text: mainContent,
+			  attachments:[
+				{
+					filename:path.basename(attachmentFile),
+					content:fs.createReadStream(attachmentFile)		
+				}
+			  ]
 			};
 
 			transporter.sendMail(mailOptions, function(error, info){
