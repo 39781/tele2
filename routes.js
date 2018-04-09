@@ -186,7 +186,7 @@ var recommendBillConfirmation = function(reqBody){
 	};
 }*/
 var otpIntent = function(reqBody){
-	sendOtp.verify("917200050085", reqBody.result.parameters['otp'], function (error, data, response) {
+	return sendOtp.verify("917200050085", reqBody.result.parameters['otp'], function (error, data, response) {
 		console.log(data); // data object with keys 'message' and 'type'
 		if(data.type == 'success'){
 			if(reqBody.result.parameters['source'] == 'recommendBillCycle'){
