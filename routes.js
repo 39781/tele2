@@ -132,7 +132,7 @@ var recommendRomingConfirmation = function(reqBody, otpMsg){
 										}
 									}
 								};break;
-			case 'ignore':respObj= {		
+			case 'ignore':case 'reject':respObj= {		
 					"speech": "",
 					"displayText":"",
 					"followupEvent":{
@@ -168,7 +168,7 @@ var recommendBillConfirmation = function(reqBody){
 										}
 									}
 								};break;
-			case 'ignore':respObj =  {		
+			case 'ignore':case 'reject':respObj =  {		
 					"speech": "",
 					"displayText":"",
 					"followupEvent":{
