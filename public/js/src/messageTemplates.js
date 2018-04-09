@@ -32,8 +32,8 @@ define(["utils","settings"], function (utils,settings) {
         let html = `<li class="list-group-item background-color-custom">
 
             <div class="media-body bot-txt-space animated fadeInLeft">
-
-                <p class="list-group-item-text-bot">${data.payload}</p>`
+				
+                <p class="list-group-item-text-bot${data.color}">${data.payload}</p>`
 				if(data.bottomIcon){
 					html+=`<p class="bot-res-timestamp"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p>`;
 				}
@@ -102,7 +102,7 @@ define(["utils","settings"], function (utils,settings) {
 
             if (data.payload[i].platform == "facebook") {
                 if (data.payload[i].payload.facebook.hasOwnProperty('quick_replies')) {
-                    quickRepliesHtml += `<p class="list-group-item-quick-reply-space">${data.payload[i].payload.facebook.text}</p><div class="quick-replies-buttons">`;
+                    quickRepliesHtml += `<p class="list-group-item-quick-reply-space${data.color}">${data.payload[i].payload.facebook.text}</p><div class="quick-replies-buttons">`;
                     for (var j = 0; j < data.payload[i].payload.facebook.quick_replies.length; j++) {
                       if(data.payload[i].payload.facebook.quick_replies[j].hasOwnProperty('payload')){
                         quickRepliesHtml += `<button type="button"  class="btn pmd-btn-outline pmd-ripple-effect btn-info QuickreplybtnPayload" data-quickRepliesPayload="${data.payload[i].payload.facebook.quick_replies[j].payload}">${data.payload[i].payload.facebook.quick_replies[j].title}</button>`
