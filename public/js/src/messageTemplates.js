@@ -39,7 +39,7 @@ define(["utils","settings"], function (utils,settings) {
 				
 				if(data.payload.indexOf("I have recommendation for you")>=0){
 					data.payload= data.payload.replace("I have recommendation for you","");
-					html +=`I have recommendation for you<br><br>${data.payload}`;	
+					html +=`I have recommendation for you<br>${data.payload}`;	
 				}else{
 					html +=`${data.payload}`;	
 				}		
@@ -157,13 +157,12 @@ define(["utils","settings"], function (utils,settings) {
 			qReply = data;
 		}			
         for(let i in qReply){
-            if(qReply[i].platform =="facebook" && qReply[i].type == "2"){
-				qReply[i].title = qReply[i].title.replace("I have recommendation for you","I have recommendation for you<br><br>");
+            if(qReply[i].platform =="facebook" && qReply[i].type == "2"){				
                 apiquickRepliesHtml +=`<p class="list-group-item-quick-reply-space${data.color}">`;
 								
 				if(qReply[i].title.indexOf("I have recommendation for you")>=0){
 					qReply[i].title = qReply[i].title.replace("I have recommendation for you","");
-					apiquickRepliesHtml +=`I have recommendation for you<br><br>${qReply[i].title}`;	
+					apiquickRepliesHtml +=`I have recommendation for you<br>${qReply[i].title}`;	
 				}else{
 					apiquickRepliesHtml +=`${qReply[i].title}`;	
 				}				
