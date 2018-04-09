@@ -113,15 +113,15 @@ function getBill(params){
 }
 var recommendRomingConfirmation = function(reqBody, otpMsg){
 	return new Promise(function(resolve, reject){
-		var resolvedQuery = reqBody.result.resolvedQuery;
-		sendOtp.send("917200050085", "PRIIND", function (error, data, response) {
-			console.log('error',error);
-			console.log('data',data);
-			console.log('response',response);
-		});
+		var resolvedQuery = reqBody.result.resolvedQuery;		
 		var respObj={};
 		switch(resolvedQuery.toLowerCase()){
-			case 'accept':respObj= {		
+			case 'accept':	sendOtp.send("917200050085", "PRIIND", function (error, data, response) {
+								console.log('error',error);
+								console.log('data',data);
+								console.log('response',response);
+							});
+							respObj= {		
 									"speech": "",
 									"displayText":"",
 									"followupEvent":{
@@ -149,25 +149,25 @@ var recommendRomingConfirmation = function(reqBody, otpMsg){
 
 var recommendBillConfirmation = function(reqBody){
 	return new Promise(function(resolve, reject){
-		var resolvedQuery = reqBody.result.resolvedQuery;
-		sendOtp.send("917200050085", "PRIIND", function (error, data, response) {
-			console.log('error',error);
-			console.log('data',data);
-			console.log('response',response);
-		});
+		var resolvedQuery = reqBody.result.resolvedQuery;		
 		var respObj={};
 		switch(resolvedQuery.toLowerCase()){
-			case 'accept':respObj= {		
-									"speech": "",
-									"displayText":"",
-									"followupEvent":{
-										"name":"otpIntent",
-										"data":{  
-											"msg":"We have sent an OTP on your mobile no.  Please enter it",
-											"source":"recommendBillCycle"
-										}
+			case 'accept':sendOtp.send("917200050085", "PRIIND", function (error, data, response) {
+								console.log('error',error);
+								console.log('data',data);
+								console.log('response',response);
+							});
+							respObj= {		
+								"speech": "",
+								"displayText":"",
+								"followupEvent":{
+									"name":"otpIntent",
+									"data":{  
+										"msg":"We have sent an OTP on your mobile no.  Please enter it",
+										"source":"recommendBillCycle"
 									}
-								};break;
+								}
+							};break;
 			case 'ignore':case 'reject':respObj =  {		
 					"speech": "",
 					"displayText":"",
