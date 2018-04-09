@@ -113,10 +113,16 @@ function getBill(params){
 }
 var recommendRomingConfirmation = function(reqBody, otpMsg){
 	return new Promise(function(resolve, reject){
+		var contexts = reqBody.result.contexts;
+		contexts.forEach(function(context){
+			if(context.name == "billingcontext"){
+				params = context.parameters;
+			}
+		})
 		var resolvedQuery = reqBody.result.resolvedQuery;		
 		var respObj={};
 		switch(resolvedQuery.toLowerCase()){
-			case 'accept':	sendOtp.send("917200050085", "PRIIND", function (error, data, response) {
+			case 'accept':	sendOtp.send(params.mobile, "PRIIND", function (error, data, response) {
 								console.log('error',error);
 								console.log('data',data);
 								console.log('response',response);
@@ -151,8 +157,14 @@ var recommendBillConfirmation = function(reqBody){
 	return new Promise(function(resolve, reject){
 		var resolvedQuery = reqBody.result.resolvedQuery;		
 		var respObj={};
+		var contexts = reqBody.result.contexts;
+		contexts.forEach(function(context){
+			if(context.name == "billingcontext"){
+				params = context.parameters;
+			}
+		})
 		switch(resolvedQuery.toLowerCase()){
-			case 'accept':sendOtp.send("917200050085", "PRIIND", function (error, data, response) {
+			case 'accept':sendOtp.send(params.mobile, "PRIIND", function (error, data, response) {
 								console.log('error',error);
 								console.log('data',data);
 								console.log('response',response);
