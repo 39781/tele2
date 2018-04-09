@@ -51,7 +51,7 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 });
 
 var lastBillingIntent = function(reqBody){
-	return new Promise(function(resovle, reject){
+	return new Promise(function(resolve, reject){
 		var contexts = reqBody.result.contexts;
 		var params={};
 		contexts.forEach(function(context){
@@ -72,7 +72,7 @@ var lastBillingIntent = function(reqBody){
 }
 
 var monthBillIntent = function(reqBody){
-	return new Promise(function(resovle, reject){
+	return new Promise(function(resolve, reject){
 		var contexts = reqBody.result.contexts;
 		var params={};
 		contexts.forEach(function(context){
@@ -89,7 +89,7 @@ var monthBillIntent = function(reqBody){
 }
 
 function getBill(params){
-	return new Promise(function(resovle, reject){
+	return new Promise(function(resolve, reject){
 		console.log(params);	
 		//fs.rename('invoices/Invoice_July2018.pdf',fileName,function(err, data){
 			mailer.sendMail('Bh@hexaware.com',params.month,'Please find the following attachment','invoices/Invoice_July2018.pdf');
@@ -112,7 +112,7 @@ function getBill(params){
 	})
 }
 var recommendRomingConfirmation = function(reqBody, otpMsg){
-	return new Promise(function(resovle, reject){
+	return new Promise(function(resolve, reject){
 		var resolvedQuery = reqBody.result.resolvedQuery;
 		sendOtp.send("917200050085", "PRIIND", function (error, data, response) {
 			console.log('error',error);
@@ -148,7 +148,7 @@ var recommendRomingConfirmation = function(reqBody, otpMsg){
 }
 
 var recommendBillConfirmation = function(reqBody){
-	return new Promise(function(resovle, reject){
+	return new Promise(function(resolve, reject){
 		var resolvedQuery = reqBody.result.resolvedQuery;
 		sendOtp.send("917200050085", "PRIIND", function (error, data, response) {
 			console.log('error',error);
@@ -211,7 +211,7 @@ var recommendBillConfirmation = function(reqBody){
 	};
 }*/
 var otpIntent = function(reqBody){
-	return new Promise(function(resovle, reject){
+	return new Promise(function(resolve, reject){
 		return sendOtp.verify("917200050085", reqBody.result.parameters['otp'], function (error, data, response) {
 			console.log(data); // data object with keys 'message' and 'type'
 			var respObj={};
