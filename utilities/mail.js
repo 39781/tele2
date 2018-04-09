@@ -1,4 +1,5 @@
-var nodemailer = require('nodemailer');
+var nodemailer 	= require('nodemailer');
+var fs 			= require('fs');
 var path		= require('path');	
 var mailer = {
 	sendMail:function(toAddress, month, mainContent,attachmentFile){
