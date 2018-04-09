@@ -42,6 +42,7 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 	}		
 	func(req.body)
 	.then((resp)=>{
+		console.log(resp);
 		res.json(resp).end();	
 	})
 	.catch((err)=>{
