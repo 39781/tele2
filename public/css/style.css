@@ -262,7 +262,7 @@ float:left;
 	color: #eef5bb;
 }
 .textColor{
-	color:#0004b8;
+	color:#0004b8 !important;
 }
 #scrollbar-style::-webkit-scrollbar-track
 {
