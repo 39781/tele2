@@ -224,7 +224,13 @@ var recommendBillConfirmation = function(reqBody){
 }*/
 var otpIntent = function(reqBody){
 	return new Promise(function(resolve, reject){
-		return sendOtp.verify("917200050085", reqBody.result.parameters['otp'], function (error, data, response) {
+		var contexts = reqBody.result.contexts;
+		contexts.forEach(function(context){
+			if(context.name == "billingcontext"){
+				params = context.parameters;
+			}
+		})
+		return sendOtp.verify(params.mobile, reqBody.result.parameters['otp'], function (error, data, response) {
 			console.log(data); // data object with keys 'message' and 'type'
 			var respObj={};
 			if(data.type == 'success'){
