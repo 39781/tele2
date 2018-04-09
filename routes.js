@@ -8,6 +8,8 @@ var checksum 		= require('./model/checksum');
 var config 			= require('./config/config');
 //var Authentication = require('./utilities/Authentication');
 var mailer			= require('./utilities/mail');	
+const SendOtp		= require('sendotp');
+const sendOtp 		= new SendOtp('208736AMELJFZJR5acb04e2');
 router.get('/', function(req, res) {
 	console.log('hari');
   res.redirect("/richowebsite");
@@ -88,8 +90,11 @@ function getBill(params){
 			}]
 	};
 }
-var recommendRomingConfirmation = function(reqBody){
+var recommendRomingConfirmation = function(reqBody, otpMsg){
 	var resolvedQuery = reqBody.result.resolvedQuery;
+	sendOtp.send("7200050085", "PRIIND", function (error, data, response) {
+		console.log(data);
+	});
 	switch(resolvedQuery.toLowerCase()){
 		case 'accept':return {		
 								"speech": "",
@@ -97,11 +102,21 @@ var recommendRomingConfirmation = function(reqBody){
 								"followupEvent":{
 									"name":"otpIntent",
 									"data":{  
+										"msg":"We have sent an OTP on your mobile no.  Please enter it",
 										"source":"recommendRomingCycle"
 									}
 								}
 							};break;
-		case 'ignore':
+		case 'ignore':return {		
+				"speech": "",
+				"displayText":"",
+				"followupEvent":{
+					"name":"finalIntent",
+					"data":{  
+						"finalMessage":""
+					}
+				}
+			};break;
 	}
 }
 
@@ -118,7 +133,16 @@ var recommendBillConfirmation = function(reqBody){
 									}
 								}
 							};break;
-		case 'ignore':
+		case 'ignore':return {		
+				"speech": "",
+				"displayText":"",
+				"followupEvent":{
+					"name":"finalIntent",
+					"data":{  
+						"finalMessage":""
+					}
+				}
+			};break;
 	}
 	
 }
@@ -151,7 +175,49 @@ var recommendBillConfirmation = function(reqBody){
 	};
 }*/
 var otpIntent = function(reqBody){
-	if(reqBody.result.parameters['otp'] == '88888'){
+	sendOtp.verify("917200050085", reqBody.result.parameters['otp'], function (error, data, response) {
+		console.log(data); // data object with keys 'message' and 'type'
+		if(data.type == 'success'){
+			if(reqBody.result.parameters['source'] == 'recommendBillCycle'){
+				return {		
+					"speech": "",
+					"displayText":"",
+					"followupEvent":{
+						"name":"recommendRomingCycle",
+						"data":{  
+							"acknowledge":"Thanks for confirmation.  Change will be effected from next billing cycle  onwards"
+						}
+					}
+				};
+			}else if(reqBody.result.parameters['source'] == 'recommendRomingCycle'){
+				return {		
+					"speech": "",
+					"displayText":"",
+					"followupEvent":{
+						"name":"finalIntent",
+						"data":{  
+							"finalMessage":"Thanks for confirmation.  Change will be effected from next billing cycle  onwards"
+						}
+					}
+				};
+							
+			}
+		}
+		if(data.type == 'error'){
+			return {		
+				"speech": "",
+				"displayText":"",
+				"followupEvent":{
+					"name":"otpIntent",
+					"data":{  
+						"msg":"Invalid Otp, please enter correct otp",
+						"source":reqBody.result.parameters['source']
+					}
+				}
+			}
+		}
+	});
+	/*if(reqBody.result.parameters['otp'] == '88888'){
 		if(reqBody.result.parameters['source'] == 'recommendBillCycle'){
 			return {		
 				"speech": "",
@@ -176,7 +242,7 @@ var otpIntent = function(reqBody){
 			};
 						
 		}	
-	}
+	}*/
 }
 
 module.exports = router;
