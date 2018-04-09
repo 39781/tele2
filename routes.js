@@ -62,8 +62,8 @@ var lastBillingIntent = function(reqBody){
 		console.log(params);
 		var date = new Date();
 		var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-		params.month = months[date.getMonth()-1];
-	
+		params.month = months[date.getMonth()-1];	
+		console.log(params);
 		resolve(getBill(params));	
 	});
 }
@@ -76,15 +76,14 @@ var monthBillIntent = function(reqBody){
 			if(context.name == "billingcontext"){
 				params = context.parameters;
 			}
-		})
+		})		
 		resolve(getBill(params));	
 	});
 	
 }
 
 function getBill(params){
-	console.log(params);
-	
+	console.log(params);	
 	//fs.rename('invoices/Invoice_July2018.pdf',fileName,function(err, data){
 		mailer.sendMail('Bh@hexaware.com',params.month,'Please find the following attachment','invoices/Invoice_July2018.pdf');
 	//});	
