@@ -132,7 +132,8 @@ var recommendBillConfirmation = function(reqBody){
 								"followupEvent":{
 									"name":"otpIntent",
 									"data":{  
-										"source":"recommendBillCycle"
+										"msg":"We have sent an OTP on your mobile no.  Please enter it",
+										"source":"recommendRomingCycle"
 									}
 								}
 							};break;
