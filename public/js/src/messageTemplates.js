@@ -29,6 +29,7 @@ define(["utils","settings"], function (utils,settings) {
 
     //Plain Text Template
     methods.plaintext = (data) => {
+		data.payload = data.payload.replace("I have recommendation for you","I have recommendation for you<br><br>");
         let html = `<li class="list-group-item background-color-custom">
 
             <div class="media-body bot-txt-space animated fadeInLeft">
@@ -147,6 +148,7 @@ define(["utils","settings"], function (utils,settings) {
 		}			
         for(let i in qReply){
             if(qReply[i].platform =="facebook" && qReply[i].type == "2"){
+				qReply[i].title = qReply[i].title.replace("I have recommendation for you","I have recommendation for you<br><br>");
                 apiquickRepliesHtml +=`<p class="list-group-item-quick-reply-space${data.color}">${qReply[i].title}</p><div class="quick-replies-buttons">`
 				for(let j=0;j<qReply[i].replies.length;j++){
 					apiquickRepliesHtml +=`<button type="button"  class="btn pmd-btn-outline pmd-ripple-effect btn-info .pmd-btn-fab apiQuickreplybtnPayload" data-apiquickRepliesPayload="${qReply[i].replies[j]}">${qReply[i].replies[j]}</button>`
