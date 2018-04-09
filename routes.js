@@ -95,8 +95,10 @@ function getBill(params){
 }
 var recommendRomingConfirmation = function(reqBody, otpMsg){
 	var resolvedQuery = reqBody.result.resolvedQuery;
-	sendOtp.send("7200050085", "PRIIND", function (error, data, response) {
-		console.log(data);
+	sendOtp.send("917200050085", "PRIIND", function (error, data, response) {
+		console.log('error',error);
+		console.log('data',data);
+		console.log('response',response);
 	});
 	switch(resolvedQuery.toLowerCase()){
 		case 'accept':return {		
