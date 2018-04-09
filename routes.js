@@ -31,6 +31,7 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 		console.log(intentName);
 	switch(intentName){
 		case 'monthBillIntent':func = monthBillIntent;break;
+		case 'lastBillingIntent':func = lastBillingIntent;break;
 		case 'recommendBillCycle': func = recommendBillCycle;break; 
 		case 'recommendRomingCycle':func = recommendRomingCycle;break;
 		case 'recommendBillConfirmation':func = recommendBillConfirmation;break;
@@ -40,6 +41,22 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 	res.json(func(req.body)).end();
 });
 
+var lastBillingIntent = function(reqBody){
+	var contexts = reqBody.result.contexts;
+	var params={};
+	contexts.forEach(function(context){
+		if(context.name == "billingcontext"){
+			params = context.parameters;
+		}
+	})
+	console.log(params);
+	var date = new Date();
+	var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+	params.month = months[date.getMonth()-1];
+	
+	return getBill(params);	
+}
+
 var monthBillIntent = function(reqBody){
 	var contexts = reqBody.result.contexts;
 	var params={};
@@ -48,6 +65,11 @@ var monthBillIntent = function(reqBody){
 			params = context.parameters;
 		}
 	})
+	
+	return getBill(params);	
+}
+
+function getBill(params){
 	console.log(params);
 	mailer.sendMail('Bh@hexaware.com',params.month,'Please find the following attachment');
 	return {		
@@ -66,7 +88,6 @@ var monthBillIntent = function(reqBody){
 			}]
 	};
 }
-
 var recommendRomingConfirmation = function(reqBody){
 	var resolvedQuery = reqBody.result.resolvedQuery;
 	switch(resolvedQuery.toLowerCase()){
