@@ -147,7 +147,7 @@ define(["utils","settings"], function (utils,settings) {
 		}			
         for(let i in qReply){
             if(qReply[i].platform =="facebook" && qReply[i].type == "2"){
-                apiquickRepliesHtml +=`<p class="list-group-item-quick-reply-space">${qReply[i].title}</p><div class="quick-replies-buttons">`
+                apiquickRepliesHtml +=`<p class="list-group-item-quick-reply-space${data.color}">${qReply[i].title}</p><div class="quick-replies-buttons">`
 				for(let j=0;j<qReply[i].replies.length;j++){
 					apiquickRepliesHtml +=`<button type="button"  class="btn pmd-btn-outline pmd-ripple-effect btn-info .pmd-btn-fab apiQuickreplybtnPayload" data-apiquickRepliesPayload="${qReply[i].replies[j]}">${qReply[i].replies[j]}</button>`
 				}
