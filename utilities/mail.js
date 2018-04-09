@@ -11,7 +11,7 @@ var mailer = {
 					pass: 'a###W14&$'
 				}
 			});
-
+			var fileName = 'invoices_'+month+'2017.pdf';
 			var mailOptions = {
 			  from: 'hexatestmailer@gmail.com',
 			  to: 'BH@hexaware.com',
@@ -19,7 +19,7 @@ var mailer = {
 			  text: mainContent,
 			  attachments:[
 				{
-					filename:path.basename(attachmentFile),
+					filename:fileName,
 					content:fs.createReadStream(attachmentFile)		
 				}
 			  ]

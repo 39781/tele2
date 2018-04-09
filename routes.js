@@ -73,10 +73,10 @@ var monthBillIntent = function(reqBody){
 
 function getBill(params){
 	console.log(params);
-	var fileName = 'invoices_'+params.month+'2017.pdf';
-	fs.rename('invoices/Invoice_July2017.pdf',fileName,function(err, data){
-		mailer.sendMail('Bh@hexaware.com',params.month,'Please find the following attachment',fileName);
-	});	
+	
+	//fs.rename('invoices/Invoice_July2018.pdf',fileName,function(err, data){
+		mailer.sendMail('Bh@hexaware.com',params.month,'Please find the following attachment','invoices/Invoice_July2018.pdf');
+	//});	
 	return {		
 		"speech": "",
 		"displayText":"",
