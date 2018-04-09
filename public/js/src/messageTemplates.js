@@ -39,7 +39,9 @@ define(["utils","settings"], function (utils,settings) {
 				
 				if(data.payload.indexOf("I have recommendation for you")>=0){
 					data.payload= data.payload.replace("I have recommendation for you","");
-					html +=`I have recommendation for you<br>${data.payload}`;	
+					data.payload = data.payload.replace("We recommend","<br>We recommend");
+					html +=`I have recommendation for you<br>`;	
+					html+=data.payload;
 				}else{
 					html +=`${data.payload}`;	
 				}		
