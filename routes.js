@@ -40,35 +40,45 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 		case 'recommendRomingConfirmation':func = recommendRomingConfirmation;break;
 		case 'otpIntent':func = otpIntent;break;
 	}		
-	res.json(func(req.body)).end();
+	func(req.body)
+	.then((resp)=>{
+		res.json(resp).end();	
+	})
+	.catch((err)=>{
+		res.json(resp).end();	
+	});
 });
 
 var lastBillingIntent = function(reqBody){
-	var contexts = reqBody.result.contexts;
-	var params={};
-	contexts.forEach(function(context){
-		if(context.name == "billingcontext"){
-			params = context.parameters;
-		}
-	})
-	console.log(params);
-	var date = new Date();
-	var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-	params.month = months[date.getMonth()-1];
+	return new Promise(function(resovle, reject){
+		var contexts = reqBody.result.contexts;
+		var params={};
+		contexts.forEach(function(context){
+			if(context.name == "billingcontext"){
+				params = context.parameters;
+			}
+		})
+		console.log(params);
+		var date = new Date();
+		var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+		params.month = months[date.getMonth()-1];
 	
-	return getBill(params);	
+		resolve(getBill(params));	
+	});
 }
 
 var monthBillIntent = function(reqBody){
-	var contexts = reqBody.result.contexts;
-	var params={};
-	contexts.forEach(function(context){
-		if(context.name == "billingcontext"){
-			params = context.parameters;
-		}
-	})
+	return new Promise(function(resovle, reject){
+		var contexts = reqBody.result.contexts;
+		var params={};
+		contexts.forEach(function(context){
+			if(context.name == "billingcontext"){
+				params = context.parameters;
+			}
+		})
+		resolve(getBill(params));	
+	});
 	
-	return getBill(params);	
 }
 
 function getBill(params){
@@ -94,68 +104,75 @@ function getBill(params){
 	};
 }
 var recommendRomingConfirmation = function(reqBody, otpMsg){
-	var resolvedQuery = reqBody.result.resolvedQuery;
-	sendOtp.send("917200050085", "PRIIND", function (error, data, response) {
-		console.log('error',error);
-		console.log('data',data);
-		console.log('response',response);
-	});
-	switch(resolvedQuery.toLowerCase()){
-		case 'accept':return {		
-								"speech": "",
-								"displayText":"",
-								"followupEvent":{
-									"name":"otpIntent",
-									"data":{  
-										"msg":"We have sent an OTP on your mobile no.  Please enter it",
-										"source":"recommendRomingCycle"
+	return new Promise(function(resovle, reject){
+		var resolvedQuery = reqBody.result.resolvedQuery;
+		sendOtp.send("917200050085", "PRIIND", function (error, data, response) {
+			console.log('error',error);
+			console.log('data',data);
+			console.log('response',response);
+		});
+		var respObj={};
+		switch(resolvedQuery.toLowerCase()){
+			case 'accept':respObj= {		
+									"speech": "",
+									"displayText":"",
+									"followupEvent":{
+										"name":"otpIntent",
+										"data":{  
+											"msg":"We have sent an OTP on your mobile no.  Please enter it",
+											"source":"recommendRomingCycle"
+										}
 									}
-								}
-							};break;
-		case 'ignore':return {		
-				"speech": "",
-				"displayText":"",
-				"followupEvent":{
-					"name":"finalIntent",
-					"data":{  
-						"finalMessage":""
+								};break;
+			case 'ignore':respObj= {		
+					"speech": "",
+					"displayText":"",
+					"followupEvent":{
+						"name":"finalIntent",
+						"data":{  
+							"finalMessage":""
+						}
 					}
-				}
-			};break;
-	}
+				};break;
+		}
+		resolve(respObj);
+	});
 }
 
 var recommendBillConfirmation = function(reqBody){
-	var resolvedQuery = reqBody.result.resolvedQuery;
-	sendOtp.send("917200050085", "PRIIND", function (error, data, response) {
-		console.log('error',error);
-		console.log('data',data);
-		console.log('response',response);
-	});
-	switch(resolvedQuery.toLowerCase()){
-		case 'accept':return {		
-								"speech": "",
-								"displayText":"",
-								"followupEvent":{
-									"name":"otpIntent",
-									"data":{  
-										"msg":"We have sent an OTP on your mobile no.  Please enter it",
-										"source":"recommendBillCycle"
+	return new Promise(function(resovle, reject){
+		var resolvedQuery = reqBody.result.resolvedQuery;
+		sendOtp.send("917200050085", "PRIIND", function (error, data, response) {
+			console.log('error',error);
+			console.log('data',data);
+			console.log('response',response);
+		});
+		var respObj={};
+		switch(resolvedQuery.toLowerCase()){
+			case 'accept':respObj= {		
+									"speech": "",
+									"displayText":"",
+									"followupEvent":{
+										"name":"otpIntent",
+										"data":{  
+											"msg":"We have sent an OTP on your mobile no.  Please enter it",
+											"source":"recommendBillCycle"
+										}
 									}
-								}
-							};break;
-		case 'ignore':return {		
-				"speech": "",
-				"displayText":"",
-				"followupEvent":{
-					"name":"finalIntent",
-					"data":{  
-						"finalMessage":""
+								};break;
+			case 'ignore':respObj =  {		
+					"speech": "",
+					"displayText":"",
+					"followupEvent":{
+						"name":"finalIntent",
+						"data":{  
+							"finalMessage":""
+						}
 					}
-				}
-			};break;
-	}
-	
+				};break;
+		}
+		resolve(respObj);
+	});
 }
 /*var recommendBillConfirmation = function(reqBody){
 	var contexts = reqBody.result.contexts;
@@ -186,47 +203,51 @@ var recommendBillConfirmation = function(reqBody){
 	};
 }*/
 var otpIntent = function(reqBody){
-	return sendOtp.verify("917200050085", reqBody.result.parameters['otp'], function (error, data, response) {
-		console.log(data); // data object with keys 'message' and 'type'
-		if(data.type == 'success'){
-			if(reqBody.result.parameters['source'] == 'recommendBillCycle'){
-				return {		
-					"speech": "",
-					"displayText":"",
-					"followupEvent":{
-						"name":"recommendRomingCycle",
-						"data":{  
-							"acknowledge":"Thanks for confirmation.  Change will be effected from next billing cycle  onwards"
+	return new Promise(function(resovle, reject){
+		return sendOtp.verify("917200050085", reqBody.result.parameters['otp'], function (error, data, response) {
+			console.log(data); // data object with keys 'message' and 'type'
+			var respObj={};
+			if(data.type == 'success'){
+				if(reqBody.result.parameters['source'] == 'recommendBillCycle'){
+					respObj= {		
+						"speech": "",
+						"displayText":"",
+						"followupEvent":{
+							"name":"recommendRomingCycle",
+							"data":{  
+								"acknowledge":"Thanks for confirmation.  Change will be effected from next billing cycle  onwards"
+							}
 						}
-					}
-				};
-			}else if(reqBody.result.parameters['source'] == 'recommendRomingCycle'){
-				return {		
-					"speech": "",
-					"displayText":"",
-					"followupEvent":{
-						"name":"finalIntent",
-						"data":{  
-							"finalMessage":"Thanks for confirmation.  Change will be effected from next billing cycle  onwards"
+					};
+				}else if(reqBody.result.parameters['source'] == 'recommendRomingCycle'){
+					respObj= {		
+						"speech": "",
+						"displayText":"",
+						"followupEvent":{
+							"name":"finalIntent",
+							"data":{  
+								"finalMessage":"Thanks for confirmation.  Change will be effected from next billing cycle  onwards"
+							}
 						}
-					}
-				};
-							
+					};
+								
+				}
 			}
-		}
-		if(data.type == 'error'){
-			return {		
-				"speech": "",
-				"displayText":"",
-				"followupEvent":{
-					"name":"otpIntent",
-					"data":{  
-						"msg":"Invalid Otp, please enter correct otp",
-						"source":reqBody.result.parameters['source']
+			if(data.type == 'error'){
+				respObj= {		
+					"speech": "",
+					"displayText":"",
+					"followupEvent":{
+						"name":"otpIntent",
+						"data":{  
+							"msg":"Invalid Otp, please enter correct otp",
+							"source":reqBody.result.parameters['source']
+						}
 					}
 				}
 			}
-		}
+			resolve(respObj);
+		})
 	});
 	/*if(reqBody.result.parameters['otp'] == '88888'){
 		if(reqBody.result.parameters['source'] == 'recommendBillCycle'){
