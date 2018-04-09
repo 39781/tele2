@@ -64,7 +64,10 @@ var lastBillingIntent = function(reqBody){
 		var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 		params.month = months[date.getMonth()-1];	
 		console.log(params);
-		resolve(getBill(params));	
+		getBill(params)
+		.then((resp)=>{
+			resolve(resp);
+		});		
 	});
 }
 
@@ -77,31 +80,36 @@ var monthBillIntent = function(reqBody){
 				params = context.parameters;
 			}
 		})		
-		resolve(getBill(params));	
+		getBill(params)
+		.then((resp)=>{
+			resolve(resp);
+		});
 	});
 	
 }
 
 function getBill(params){
-	console.log(params);	
-	//fs.rename('invoices/Invoice_July2018.pdf',fileName,function(err, data){
-		mailer.sendMail('Bh@hexaware.com',params.month,'Please find the following attachment','invoices/Invoice_July2018.pdf');
-	//});	
-	return {		
-		"speech": "",
-		"displayText":"",
-		"followupEvent":{
-			"name":"recommendBillCycle",
-			"data":{  
-				"acknowledge":"Thanks for the inputs.  We will send the bill copies to your registered email ID with us",
-				"mobile":params.mobile
-			}
-		},
-		"messages": [{
-			  "type": 0,
-			  "speech": ""
-			}]
-	};
+	return new Promise(function(resovle, reject){
+		console.log(params);	
+		//fs.rename('invoices/Invoice_July2018.pdf',fileName,function(err, data){
+			mailer.sendMail('Bh@hexaware.com',params.month,'Please find the following attachment','invoices/Invoice_July2018.pdf');
+		//});	
+		resolve( {		
+			"speech": "",
+			"displayText":"",
+			"followupEvent":{
+				"name":"recommendBillCycle",
+				"data":{  
+					"acknowledge":"Thanks for the inputs.  We will send the bill copies to your registered email ID with us",
+					"mobile":params.mobile
+				}
+			},
+			"messages": [{
+				  "type": 0,
+				  "speech": ""
+				}]
+		});
+	})
 }
 var recommendRomingConfirmation = function(reqBody, otpMsg){
 	return new Promise(function(resovle, reject){
