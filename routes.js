@@ -45,7 +45,7 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 		res.json(resp).end();	
 	})
 	.catch((err)=>{
-		res.json(resp).end();	
+		res.json(err).end();	
 	});
 });
 
