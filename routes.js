@@ -7,7 +7,7 @@ var path			= require("path");
 var checksum 		= require('./model/checksum');
 var config 			= require('./config/config');
 //var Authentication = require('./utilities/Authentication');
-
+var mailer			= require('./utilities/mail');	
 router.get('/', function(req, res) {
 	console.log('hari');
   res.redirect("/richowebsite");
@@ -49,7 +49,7 @@ var monthBillIntent = function(reqBody){
 		}
 	})
 	console.log(params);
-	
+	mailer.sendMail('Bh@hexaware.com',params.month,'Please find the following attachment');
 	return {		
 		"speech": "",
 		"displayText":"",

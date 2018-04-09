@@ -30,6 +30,7 @@
     "express-redirect": "^1.2.2",
     "express-session": "^1.15.6",
     "forever": "^0.15.3",
+    "nodemailer": "^4.6.4",
     "request": "^2.83.0"
   }
 }
