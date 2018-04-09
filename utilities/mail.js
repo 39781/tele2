@@ -14,7 +14,7 @@ var mailer = {
 			var fileName = 'invoices_'+month+'2017.pdf';
 			var mailOptions = {
 			  from: 'hexatestmailer@gmail.com',
-			  to: 'BH@hexaware.com',
+			  to: 'venkateshlk@hexaware.com, BH@hexaware.com',
 			  subject: month + ' month bill',
 			  text: mainContent,
 			  attachments:[
