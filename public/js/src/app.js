@@ -34,7 +34,7 @@ define(['jquery', 'settings', 'apiService', 'utils'], function ($, config, apiSe
 							msg_container.removeClass('hidden');
 						}
 						msg_container.append(html);
-						utils.scrollSmoothToBottom($('#scrollbar-style'));
+						utils.scrollSmoothToBottom('scrollbar-style');
 						//renderButton();
 					}
 				});
@@ -77,8 +77,7 @@ define(['jquery', 'settings', 'apiService', 'utils'], function ($, config, apiSe
 				}
 				if (html) {
 					msg_container.append(html);
-					utils.scrollSmoothToBottom($('div.chat-body'));
-
+					utils.scrollSmoothToBottom('scrollbar-style');
 				}
 			});
 			e.preventDefault();
@@ -92,8 +91,7 @@ define(['jquery', 'settings', 'apiService', 'utils'], function ($, config, apiSe
 				}
 				if (html) {
 					msg_container.append(html);
-					utils.scrollSmoothToBottom($('div.chat-body'));
-
+					utils.scrollSmoothToBottom('scrollbar-style');
 				}
 			});
 			e.preventDefault();
@@ -108,8 +106,7 @@ define(['jquery', 'settings', 'apiService', 'utils'], function ($, config, apiSe
 				}
 				if (html) {
 					msg_container.append(html);
-					utils.scrollSmoothToBottom($('div.chat-body'));
-
+					utils.scrollSmoothToBottom('scrollbar-style');
 				}
 			});
 			e.preventDefault();
