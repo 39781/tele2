@@ -9,7 +9,7 @@ var config 			= require('./config/config');
 //var Authentication = require('./utilities/Authentication');
 var mailer			= require('./utilities/mail');	
 const SendOtp		= require('sendotp');
-const sendOtp 		= new SendOtp('208736AMELJFZJR5acb04e2');
+const sendOtp 		= new SendOtp('208736A4WQr1Mi5acc93a5');
 router.get('/', function(req, res) {
 	console.log('hari');
   res.redirect("/richowebsite");
