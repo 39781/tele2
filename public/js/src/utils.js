@@ -20,14 +20,13 @@ define([], function () {
         return `${hours}:${minutes} ${ampm}`;
     };
 
-    methods.scrollSmoothToBottom = (element) => {
-		console.log('element',element);
-		
+    methods.scrollSmoothToBottom = (element) => {				
         setTimeout(() => {
             //var height = element[0].scrollHeight;
             //element[0].scrollTop(height);
 			//console.log(height);
 			//console.log(element[0].scrollTop);
+			console.log('element',element);
 			var objDiv = document.getElementById(element);
 			objDiv.scrollTop = objDiv.scrollHeight;
         }, 500);
