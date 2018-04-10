@@ -20,15 +20,14 @@ define([], function () {
         return `${hours}:${minutes} ${ampm}`;
     };
 
-    methods.scrollSmoothToBottom = (element) => {				
+    methods.scrollSmoothToBottom = (element) => {
+		console.log('element',element);
+		
         setTimeout(() => {
-            //var height = element[0].scrollHeight;
-            //element[0].scrollTop(height);
-			//console.log(height);
-			//console.log(element[0].scrollTop);
-			console.log('element',element);
-			var objDiv = document.getElementById(element);
-			objDiv.scrollTop = objDiv.scrollHeight;
+            var height = element[0].scrollHeight;
+            element.scrollTop(height);
+			//var objDiv = document.getElementById("scrollbar-style");
+			//objDiv.scrollTop = objDiv.scrollHeight;
         }, 500);
     };
 
