@@ -38,7 +38,7 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 		case 'recommendRomingCycle':func = recommendRomingCycle;break;
 		case 'recommendBillConfirmation':func = recommendBillConfirmation;break;
 		case 'recommendRomingConfirmation':func = recommendRomingConfirmation;break;
-		case 'paymentYesIntent':func = paymmentYesIntent;break;
+		case 'paymentYesIntent':func = paymentYesIntent;break;
 		case 'paymentNoIntent':case 'customerServiceNoIntent':func = noIntent;break;
 		
 		case 'otpIntent':func = otpIntent;break;
