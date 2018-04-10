@@ -34,8 +34,9 @@ define(["utils","settings"], function (utils,settings) {
             <div class="media-body bot-txt-space animated fadeInLeft">
 				
                 <p class="list-group-item-text-bot${data.color}">`;
-				
-				
+				if(/please choose/i.test(data.payload)){
+					data.color = "";
+				}				
 				if(data.payload.indexOf("I have a recommendation for you.")>=0){
 					data.payload = data.payload.replace("I have a recommendation for you.","I have a recommendation for you.<br>");
 					data.payload = data.payload.replace("We recommend","<br>We recommend");
@@ -152,6 +153,9 @@ define(["utils","settings"], function (utils,settings) {
         // <div class="media-body">
         // <h3 class="list-group-item-heading">${data.senderName}</h3>`;
 		let qReply;
+		if(/please choose/i.test(data.payload)){
+			data.color = "";
+		}
         if(data.payload){
 			qReply = data.payload;
 		}else{
