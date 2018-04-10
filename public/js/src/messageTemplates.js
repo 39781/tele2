@@ -34,7 +34,7 @@ define(["utils","settings"], function (utils,settings) {
             <div class="media-body bot-txt-space animated fadeInLeft">
 				
                 <p class="list-group-item-text-bot${data.color}">`;
-				if(/please choose/i.test(data.payload)){
+				if(/please choose/ig.test(data.payload)){
 					data.color = "";
 				}				
 				if(data.payload.indexOf("I have a recommendation for you.")>=0){
@@ -153,8 +153,9 @@ define(["utils","settings"], function (utils,settings) {
         // <div class="media-body">
         // <h3 class="list-group-item-heading">${data.senderName}</h3>`;
 		let qReply;
-		if(/please choose/i.test(data.payload)){
+		if(/please choose/ig.test(data.payload)){
 			data.color = "";
+			console.log("true");
 		}
         if(data.payload){
 			qReply = data.payload;
