@@ -163,6 +163,10 @@ define(["utils","settings"], function (utils,settings) {
 			qReply = data;
 		}			
         for(let i in qReply){
+			if(/please choose/ig.test(qReply[i].title)){
+				data.color = "";
+				console.log("true");
+			}
             if(qReply[i].platform =="facebook" && qReply[i].type == "2"){				
                 apiquickRepliesHtml +=`<p class="list-group-item-quick-reply-space${data.color}">`;
 								
