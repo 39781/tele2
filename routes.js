@@ -54,7 +54,13 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 });
 var paymentYesIntent = function(reqBody){
 	return new Promise(function(resolve, reject){
-		sendOtp.send(params.mobile, "PRIIND", function (error, data, response) {
+		var contexts = reqBody.result.contexts;
+		contexts.forEach(function(context){
+			if(context.name == "billingcontext"){
+				params = context.parameters;
+			}
+		})
+		sendOtp.send(params.mobile, "TELE2", function (error, data, response) {
 			console.log('error',error);
 			console.log('data',data);
 			console.log('response',response);
@@ -158,7 +164,7 @@ var recommendRomingConfirmation = function(reqBody, otpMsg){
 		var resolvedQuery = reqBody.result.resolvedQuery;		
 		var respObj={};
 		switch(resolvedQuery.toLowerCase()){
-			case 'accept':	sendOtp.send(params.mobile, "PRIIND", function (error, data, response) {
+			case 'accept':	sendOtp.send(params.mobile, "TELE2", function (error, data, response) {
 								console.log('error',error);
 								console.log('data',data);
 								console.log('response',response);
@@ -200,7 +206,7 @@ var recommendBillConfirmation = function(reqBody){
 			}
 		})
 		switch(resolvedQuery.toLowerCase()){
-			case 'accept':sendOtp.send(params.mobile, "PRIIND", function (error, data, response) {
+			case 'accept':sendOtp.send(params.mobile, "TELE2", function (error, data, response) {
 								console.log('error',error);
 								console.log('data',data);
 								console.log('response',response);
