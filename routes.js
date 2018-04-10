@@ -38,6 +38,9 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 		case 'recommendRomingCycle':func = recommendRomingCycle;break;
 		case 'recommendBillConfirmation':func = recommendBillConfirmation;break;
 		case 'recommendRomingConfirmation':func = recommendRomingConfirmation;break;
+		case 'paymentYesIntent':func = paymmentYesIntent;break;
+		case 'paymentNoIntent':case 'customerServiceNoIntent':func = noIntent;break;
+		
 		case 'otpIntent':func = otpIntent;break;
 	}		
 	func(req.body)
@@ -49,7 +52,35 @@ router.post('/botHandler',/*Authentication.SetRealm('botHandler'), Authenticatio
 		res.json(err).end();	
 	});
 });
-
+var paymentYesIntent = function(reqBody){
+	return new Promise(function(resolve, reject){
+		resolve({		
+			"speech": "",
+			"displayText":"",
+			"followupEvent":{
+				"name":"otpIntent",
+				"data":{  
+					"msg":"I have sent an OTP to the mobile number linked to your account in the Citibank, Please enter the OTP to complete the transaction",
+					"source":"paymentIntent"
+				}
+			}
+		});
+	});
+}
+var noIntent = function(reqBody){
+	return new Promise(function(resolve, reject){
+		resolve({		
+			"speech": "",
+			"displayText":"",
+			"followupEvent":{
+				"name":"finalIntent",
+				"data":{  
+					"finalMessage":" "
+				}
+			}
+		});
+	});
+}
 var lastBillingIntent = function(reqBody){
 	return new Promise(function(resolve, reject){
 		var contexts = reqBody.result.contexts;
@@ -94,7 +125,7 @@ function getBill(params){
 		//fs.rename('invoices/Invoice_July2018.pdf',fileName,function(err, data){
 			mailer.sendMail('Bh@hexaware.com',params.month,'Please find the following attachment','invoices/Invoice_July2018.pdf');
 		//});	
-		resolve( {		
+		resolve({		
 			"speech": "",
 			"displayText":"",
 			"followupEvent":{
@@ -257,6 +288,17 @@ var otpIntent = function(reqBody){
 						}
 					};
 								
+				}else if(reqBody.result.parameters['source'] == 'paymentIntent'){
+					respObj= {		
+						"speech": "",
+						"displayText":"",
+						"followupEvent":{
+							"name":"finalIntent",
+							"data":{  
+								"finalMessage":"Your payment has been done successfully"
+							}
+						}
+					};
 				}
 			}
 			if(data.type == 'error'){
