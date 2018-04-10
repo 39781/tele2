@@ -60,7 +60,7 @@ var paymentYesIntent = function(reqBody){
 				params = context.parameters;
 			}
 		})
-		sendOtp.send(params.mobile, "TELE2", function (error, data, response) {
+		sendOtp.send(params.mobile, "TELEID", function (error, data, response) {
 			console.log('error',error);
 			console.log('data',data);
 			console.log('response',response);
@@ -164,7 +164,7 @@ var recommendRomingConfirmation = function(reqBody, otpMsg){
 		var resolvedQuery = reqBody.result.resolvedQuery;		
 		var respObj={};
 		switch(resolvedQuery.toLowerCase()){
-			case 'accept':	sendOtp.send(params.mobile, "TELE2", function (error, data, response) {
+			case 'accept':	sendOtp.send(params.mobile, "TELEID", function (error, data, response) {
 								console.log('error',error);
 								console.log('data',data);
 								console.log('response',response);
@@ -206,7 +206,7 @@ var recommendBillConfirmation = function(reqBody){
 			}
 		})
 		switch(resolvedQuery.toLowerCase()){
-			case 'accept':sendOtp.send(params.mobile, "TELE2", function (error, data, response) {
+			case 'accept':sendOtp.send(params.mobile, "TELEID", function (error, data, response) {
 								console.log('error',error);
 								console.log('data',data);
 								console.log('response',response);
