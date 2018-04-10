@@ -22,9 +22,12 @@ define([], function () {
 
     methods.scrollSmoothToBottom = (element) => {
 		console.log('element',element);
+		
         setTimeout(() => {
             var height = element[0].scrollHeight;
-            element.scrollTop(height);
+            element[0].scrollTop(height);
+			console.log(height);
+			console.log(element[0].scrollTop);
 			//var objDiv = document.getElementById("scrollbar-style");
 			//objDiv.scrollTop = objDiv.scrollHeight;
         }, 500);
