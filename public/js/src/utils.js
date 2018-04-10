@@ -24,6 +24,8 @@ define([], function () {
         setTimeout(() => {
             var height = element[0].scrollHeight;
             element.scrollTop(height);
+			//var objDiv = document.getElementById("scrollbar-style");
+			//objDiv.scrollTop = objDiv.scrollHeight;
         }, 500);
     };
 

@@ -34,7 +34,7 @@ define(['jquery', 'settings', 'apiService', 'utils'], function ($, config, apiSe
 							msg_container.removeClass('hidden');
 						}
 						msg_container.append(html);
-						utils.scrollSmoothToBottom($('div.chat-body'));
+						utils.scrollSmoothToBottom($('#scrollbar-style'));
 						//renderButton();
 					}
 				});
@@ -91,7 +91,6 @@ define(['jquery', 'settings', 'apiService', 'utils'], function ($, config, apiSe
 					console.log("error occured while processing your Request") //change into some inline fancy display, show error in chat window.
 				}
 				if (html) {
-
 					msg_container.append(html);
 					utils.scrollSmoothToBottom($('div.chat-body'));
 
