@@ -82,7 +82,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 						callback(null, cardHTML);
 					}else{
 						if(response.result.fulfillment.messages){
-							let cl = response.result.fulfillment.messages-1;
+							let cl = response.result.fulfillment.messages.length-1;
 							for(let i in response.result.fulfillment.messages){
 								console.log('length',i);
 								bottomFlag = false;								
