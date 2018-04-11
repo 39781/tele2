@@ -38,9 +38,9 @@ define(["utils","settings"], function (utils,settings) {
 					data.color = "";
 				}				
 				if(data.payload.indexOf("I have a recommendation for you.")>=0){
-					data.payload = data.payload.replace("I have a recommendation for you.","I have a recommendation for you.<br>");
+					data.payload = data.payload.replace("I have a recommendation for you.","");
 					data.payload = data.payload.replace("We recommend","<br>We recommend");
-					html +=`I have recommendation for you<br>`;	
+					html +=`I have a recommendation for you.<br>`;	
 					html+=data.payload;
 				}else{
 					html +=`${data.payload}`;	
@@ -172,7 +172,7 @@ define(["utils","settings"], function (utils,settings) {
 								
 				if(qReply[i].title.indexOf("I have a recommendation for you.")>=0){
 					qReply[i].title = qReply[i].title.replace("I have a recommendation for you.","");
-					apiquickRepliesHtml +=`I have recommendation for you.<br>${qReply[i].title}`;	
+					apiquickRepliesHtml +=`I have a recommendation for you.<br>${qReply[i].title}`;	
 				}else{
 					apiquickRepliesHtml +=`${qReply[i].title}`;	
 				}				
