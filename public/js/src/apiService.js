@@ -91,7 +91,10 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								if(i == response.result.fulfillment.messages.length-1){
 									bottomFlag = true;
 								}
-								if(response.result.fulfillment.messages[i].type == 0 &&response.result.fulfillment.messages[i].speech.trim().length>0){
+								if(response.result.fulfillment.messages[i].type == 0){
+									if(response.result.fulfillment.messages[i].speech.trim().length<=0){
+										color = "";
+									}
 									let cardHTML = cards({
 										"payload": response.result.fulfillment.messages[i].speech,
 										"senderName": config.botTitle,
