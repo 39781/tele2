@@ -82,29 +82,32 @@ function($, config, utils, messageTpl, cards, uuidv1){
 						callback(null, cardHTML);
 					}else{
 						if(response.result.fulfillment.messages){
+							let cl = response.result.fulfillment.messages-1;
 							for(let i in response.result.fulfillment.messages){
 								console.log('length',i);
-								bottomFlag = false;
-								if(i>0){
-									color = " textColor";
-								}
+								bottomFlag = false;								
 								if(i == response.result.fulfillment.messages.length-1){
 									bottomFlag = true;
 								}
 								if(response.result.fulfillment.messages[i].type == 0){
 									if(response.result.fulfillment.messages[i].speech.trim().length<=0){
 										color = "";
+										cl--;
+									}else{
+										let cardHTML = cards({
+											"payload": response.result.fulfillment.messages[i].speech,
+											"senderName": config.botTitle,
+											"senderAvatar": config.botAvatar,
+											"time": utils.currentTime(),
+											"color":color,
+											"bottomIcon":bottomFlag,
+											"className": ''
+										}, "plaintext");
+										callback(null, cardHTML);
 									}
-									let cardHTML = cards({
-										"payload": response.result.fulfillment.messages[i].speech,
-										"senderName": config.botTitle,
-										"senderAvatar": config.botAvatar,
-										"time": utils.currentTime(),
-										"color":color,
-										"bottomIcon":bottomFlag,
-										"className": ''
-									}, "plaintext");
-									callback(null, cardHTML);
+								}
+								if(cl>0){
+									color = " textColor";
 								}
 								if(response.result.fulfillment.messages[i].type == 1){
 									count = count + 1;
