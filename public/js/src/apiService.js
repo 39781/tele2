@@ -82,8 +82,10 @@ function($, config, utils, messageTpl, cards, uuidv1){
 						callback(null, cardHTML);
 					}else{
 						if(response.result.fulfillment.messages){
+							let cl = response.result.fulfillment.messages.length-1;
 							for(let i in response.result.fulfillment.messages){
 								console.log('length',i);
+<<<<<<< HEAD
 								bottomFlag = false;		
 								resIndex = 1;
 								if(i>0){
@@ -104,6 +106,31 @@ function($, config, utils, messageTpl, cards, uuidv1){
 										"className": ''
 									}, "plaintext");
 									callback(null, cardHTML);
+=======
+								bottomFlag = false;								
+								if(i == response.result.fulfillment.messages.length-1){
+									bottomFlag = true;
+								}
+								if(response.result.fulfillment.messages[i].type == 0){
+									if(response.result.fulfillment.messages[i].speech.trim().length<=0){
+										color = "";
+										cl--;
+									}else{
+										let cardHTML = cards({
+											"payload": response.result.fulfillment.messages[i].speech,
+											"senderName": config.botTitle,
+											"senderAvatar": config.botAvatar,
+											"time": utils.currentTime(),
+											"color":color,
+											"bottomIcon":bottomFlag,
+											"className": ''
+										}, "plaintext");
+										callback(null, cardHTML);
+									}
+								}
+								if(cl>0){
+									color = " textColor";
+>>>>>>> c57cdde3c80014157fe66e2e1401719b874c580a
 								}
 								if(response.result.fulfillment.messages[i].type == 1){
 									count = count + 1;

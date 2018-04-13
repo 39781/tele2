@@ -34,9 +34,23 @@ define(["utils","settings"], function (utils,settings) {
     methods.plaintext = (data) => {		
         let html = `<li class="list-group-item background-color-custom">
 
+<<<<<<< HEAD
             <div class="media-body bot-txt-space animated fadeInLeft">`				
 				if(data.responseIndex){
 					html+=	`<img style="border-radius:50%;border:2px solid white;float: left;margin-right: 10px;" width="40" height="40" src='${settings.botAvatar}'/><p class="list-group-item-text-bot beforeAfter">${data.payload}</p>`;
+=======
+            <div class="media-body bot-txt-space animated fadeInLeft">
+				
+                <p class="list-group-item-text-bot${data.color}">`;
+				if(/please choose/ig.test(data.payload)){
+					data.color = "";
+				}				
+				if(data.payload.indexOf("I have a recommendation for you.")>=0){
+					data.payload = data.payload.replace("I have a recommendation for you.","");
+					data.payload = data.payload.replace("We recommend","<br>We recommend");
+					html +=`I have a recommendation for you.<br>`;	
+					html+=data.payload;
+>>>>>>> c57cdde3c80014157fe66e2e1401719b874c580a
 				}else{
 					html+=	`<img style="border-radius:50%;float: left;margin-right: 10px;" width="40" height="40" src='avatar/blank.ico'/><p class="list-group-item-text-bot">${data.payload}</p>`;
 				}
@@ -152,10 +166,24 @@ define(["utils","settings"], function (utils,settings) {
 		}else{
 			qReply = data;
 		}			
+<<<<<<< HEAD
         for(let i in qReply){			
             if(qReply[i].platform =="facebook" && qReply[i].type == "2"){
 				if(data.responseIndex){
 					apiquickRepliesHtml+=	`<img style="border-radius:50%;border:2px solid white;float: left;margin-right: 10px;" width="40" height="40" src='${settings.botAvatar}'/><p class="list-group-item-quick-reply-space beforeAfter">${qReply[i].title}</p>`
+=======
+        for(let i in qReply){
+			if(/please choose/ig.test(qReply[i].title)){
+				data.color = "";
+				console.log("true");
+			}
+            if(qReply[i].platform =="facebook" && qReply[i].type == "2"){				
+                apiquickRepliesHtml +=`<p class="list-group-item-quick-reply-space${data.color}">`;
+								
+				if(qReply[i].title.indexOf("I have a recommendation for you.")>=0){
+					qReply[i].title = qReply[i].title.replace("I have a recommendation for you.","");
+					apiquickRepliesHtml +=`I have a recommendation for you.<br>${qReply[i].title}`;	
+>>>>>>> c57cdde3c80014157fe66e2e1401719b874c580a
 				}else{
 					apiquickRepliesHtml+=	`<img style="border-radius:50%;float: left;margin-right: 10px;" width="40" height="40" src='avatar/blank.ico'/><p class="list-group-item-quick-reply-space">${qReply[i].title}</p>`
 					}

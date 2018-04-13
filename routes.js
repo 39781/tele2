@@ -9,8 +9,13 @@ var config 			= require('./config/config');
 //var Authentication = require('./utilities/Authentication');
 var mailer			= require('./utilities/mail');	
 const SendOtp		= require('sendotp');
+<<<<<<< HEAD
 const sendOtp 		= new SendOtp('208736A4WQr1Mi5acc93a5');
 //const sendOtp 		= new SendOtp('209393AILCgzYm2m675acd86a1');
+=======
+//const sendOtp 		= new SendOtp('208736A4WQr1Mi5acc93a5');
+const sendOtp 		= new SendOtp('209393AILCgzYm2m675acd86a1');
+>>>>>>> c57cdde3c80014157fe66e2e1401719b874c580a
 router.get('/', function(req, res) {
 	console.log('hari');
   res.redirect("/home.html");
