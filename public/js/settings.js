@@ -8,13 +8,13 @@ This file is part of the Innovation LAB - Offline Bot.
 
 define({
 
-    accessToken: "f79842b4296c47da8f93e9d57115cfdd ",
+    accessToken: "a3a85a890ae5430282e667c99170693b ",
     chatServerURL : "https://api.api.ai/v1/",
 
-    applicationTitle: "Tele2",
+    applicationTitle: "TTCB2C",
     userTitle : "Me",
-    botTitle : "Tele2",
-    botAvatar : "avatar/tele2.jpg",
+    botTitle : "TTC-B2C",
+    botAvatar : "avatar/B2C.jpg",
     userAvatar : "avatar/user.png",
     attachmentUploadURL : "",
     platform : "facebook",

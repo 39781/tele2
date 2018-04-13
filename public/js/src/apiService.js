@@ -52,7 +52,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 					let isAudio=false;
 					let audioUrl=null;
 					let isList = false;
-					let color="";
+					let resIndex="0";
 					let isFile=false;
 					let fileUrl=null;
 					let isReceipt=false;
@@ -84,20 +84,22 @@ function($, config, utils, messageTpl, cards, uuidv1){
 						if(response.result.fulfillment.messages){
 							for(let i in response.result.fulfillment.messages){
 								console.log('length',i);
-								bottomFlag = false;
+								bottomFlag = false;		
+								resIndex = 1;
 								if(i>0){
-									color = " textColor";
-								}
+									resIndex = 0;
+								}									
 								if(i == response.result.fulfillment.messages.length-1){
 									bottomFlag = true;
 								}
+								console.log('resIndex',resIndex);
 								if(response.result.fulfillment.messages[i].type == 0 ){
 									let cardHTML = cards({
 										"payload": response.result.fulfillment.messages[i].speech,
 										"senderName": config.botTitle,
 										"senderAvatar": config.botAvatar,
 										"time": utils.currentTime(),
-										"color":color,
+										"responseIndex":resIndex,
 										"bottomIcon":bottomFlag,
 										"className": ''
 									}, "plaintext");
@@ -105,6 +107,9 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								}
 								if(response.result.fulfillment.messages[i].type == 1){
 									count = count + 1;
+									if(count>=response.result.fulfillment.messages.length){
+										resIndex = 1;
+									}
 									hasbutton=(response.result.fulfillment.messages[i].buttons.length > 0) ? true :false;
 									isCardorCarousel = true;           
 								}
@@ -173,7 +178,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"payload": response.result.fulfillment.speech,
 								"senderName": config.botTitle,
 								"senderAvatar": config.botAvatar,
-								"color":color,
+								"responseIndex":resIndex,
 								"time": utils.currentTime(),
 								"bottomIcon":bottomFlag,
 								"className": ''
@@ -189,7 +194,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderName": config.botTitle,
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
-								"color":color,
+								"responseIndex":resIndex,
 								"bottomIcon":bottomFlag,
 								"buttons":hasbutton,
 								"className": ''
@@ -197,12 +202,12 @@ function($, config, utils, messageTpl, cards, uuidv1){
 							callback(null, cardHTML);
 						} 
 						else {
-							let carouselHTML = cards({
-								
+							let carouselHTML = cards({								
 									"payload": response.result.fulfillment.messages,
 									"senderName": config.botTitle,
 									"senderAvatar": config.botAvatar,
 									"time": utils.currentTime(),
+									"responseIndex":resIndex,
 									"buttons":hasbutton,
 									"bottomIcon":bottomFlag,
 									"className": ''
@@ -223,7 +228,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderName": config.botTitle,
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
-								"color":color,
+								"responseIndex":resIndex,
 								"bottomIcon":bottomFlag,
 								"className": ''
 						}, "quickreplies");
@@ -237,7 +242,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
 								"bottomIcon":bottomFlag,
-								"color":color,
+								"responseIndex":resIndex,
 								"className": ''
 						}, "quickreplyfromapiai");
 						callback(null, cardHTML);
@@ -248,7 +253,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderName": config.botTitle,
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
-								"color":color,
+								"responseIndex":resIndex,
 								"bottomIcon":bottomFlag,
 								"className": ''
 						}, "video");
@@ -261,7 +266,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
 								"bottomIcon":bottomFlag,
-								"color":color,
+								"responseIndex":resIndex,
 								"className": ''
 						}, "audio");
 						callback(null, cardHTML);
@@ -273,7 +278,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
 								"bottomIcon":bottomFlag,
-								"color":color,
+								"responseIndex":resIndex,
 								"className": ''
 						}, "file");
 						callback(null, cardHTML);
@@ -284,7 +289,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 							"payload": listData,
 							"senderName": config.botTitle,
 							"senderAvatar": config.botAvatar,
-							"color":color,
+							"responseIndex":resIndex,
 							"bottomIcon":bottomFlag,
 							"time": utils.currentTime(),
 							"className": ''
@@ -296,7 +301,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 							"payload": receiptData,
 							"senderName": config.botTitle,
 							"senderAvatar": config.botAvatar,
-							"color":color,
+							"responseIndex":resIndex,
 							"time": utils.currentTime(),
 							"bottomIcon":bottomFlag,
 							"className": ''
@@ -310,7 +315,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 							"senderName": config.botTitle,
 							"senderAvatar": config.botAvatar,
 							"time": utils.currentTime(),
-							"color":color,
+							"responseIndex":resIndex,
 							"bottomIcon":bottomFlag,
 							"className": '',
 							"isWeb":$('#webchat').context.URL
@@ -322,7 +327,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 						let cardHTML = cards({
 							"payload": webviewData,							
 							"senderName": config.botTitle,
-							"color":color,
+							"responseIndex":resIndex,
 							"senderAvatar": config.botAvatar,
 							"time": utils.currentTime(),
 							"bottomIcon":bottomFlag,
@@ -338,7 +343,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 							"senderName": config.botTitle,
 							"senderAvatar": config.botAvatar,
 							"bottomIcon":bottomFlag,
-							"color":color,
+							"responseIndex":resIndex,
 							"time": utils.currentTime(),
 							"className": '',
 							"isWeb":$('#webchat').context.URL

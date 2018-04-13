@@ -31,6 +31,7 @@ define(['messageTemplates', 'uuid'], function(messageTpl, uuidv1){
                 return messageTpl.list(this.data);
             }
             if(this.responseType == "carousel"){
+				console.log(JSON.stringify(this.data));
                 return messageTpl.carousel(this.data, uuidv1());
             }
 			if(this.responseType == "webview"){
