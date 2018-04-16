@@ -4,10 +4,7 @@
 Copyright (c) 2017-2017 Hexaware Technologies
 This file is part of the Innovation LAB - Offline Bot.
 ------------------------------------------------------------------- */
-//display: inline-block;
-    
 
-    
 
 define(["utils","settings"], function (utils,settings) {
 
@@ -20,10 +17,10 @@ define(["utils","settings"], function (utils,settings) {
             <div class="media-left pull-right animated fadeInRight">
 
             <div class="media-body user-txt-space">
-				<img style="border-radius:50%;border:2px solid white;float: right;margin-right: 10px;" width="40" height="40" src='${settings.userAvatar}'/>
+
                 <p class="list-group-item-text-user">${data.payload}</p>`;
                 if(data.bottomIcon){
-					html+=`<p class="user-timestamp"><small> ${data.time}</small></p>`;
+					html+=`<p class="user-timestamp"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.userAvatar}'/>${data.time}</small></p>`;
 				}
             html+=`</div></li>`;
 
@@ -34,15 +31,24 @@ define(["utils","settings"], function (utils,settings) {
     methods.plaintext = (data) => {		
         let html = `<li class="list-group-item background-color-custom">
 
-            <div class="media-body bot-txt-space animated fadeInLeft">`				
-				if(data.responseIndex){
-					html+=	`<img style="border-radius:50%;border:2px solid white;float: left;margin-right: 10px;" width="40" height="40" src='${settings.botAvatar}'/><p class="list-group-item-text-bot beforeAfter">${data.payload}</p>`;
+            <div class="media-body bot-txt-space animated fadeInLeft">
+				
+                <p class="list-group-item-text-bot${data.color}">`;
+				if(/please choose/ig.test(data.payload)){
+					data.color = "";
+				}				
+				if(data.payload.indexOf("I have a recommendation for you.")>=0){
+					data.payload = data.payload.replace("I have a recommendation for you.","");
+					data.payload = data.payload.replace("We recommend","<br>We recommend");
+					html +=`I have a recommendation for you.<br>`;	
+					html+=data.payload;
 				}else{
-					html+=	`<img style="border-radius:50%;float: left;margin-right: 10px;" width="40" height="40" src='avatar/blank.ico'/><p class="list-group-item-text-bot">${data.payload}</p>`;
-				}
-                
+					html +=`${data.payload}`;	
+				}		
+				
+				html+=`</p>`;
 				if(data.bottomIcon){
-					html+=`<p class="bot-res-timestamp"><small> ${data.time}</small></p>`;
+					html+=`<p class="bot-res-timestamp"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p>`;
 				}
             html+=`</div>
 
@@ -92,7 +98,7 @@ define(["utils","settings"], function (utils,settings) {
             }
             html = cardBody + cardButtons + `</div></div>`;
 			if(data.bottomIcon){
-				html+=`<p class="bot-res-timestamp-card"><small>${data.time}</small></p>`
+				html+=`<p class="bot-res-timestamp-card"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p>`
 			}
 			html+=`</div></li>`;
         }
@@ -146,42 +152,48 @@ define(["utils","settings"], function (utils,settings) {
         // </div>
         // <div class="media-body">
         // <h3 class="list-group-item-heading">${data.senderName}</h3>`;
-		let qReply;		
+		let qReply;
+		if(/please choose/ig.test(data.payload)){
+			data.color = "";
+			console.log("true");
+		}
         if(data.payload){
 			qReply = data.payload;
 		}else{
 			qReply = data;
 		}			
-        for(let i in qReply){			
-            if(qReply[i].platform =="facebook" && qReply[i].type == "2"){
-				if(data.responseIndex){
-					apiquickRepliesHtml+=	`<img style="border-radius:50%;border:2px solid white;float: left;margin-right: 10px;" width="40" height="40" src='${settings.botAvatar}'/><p class="list-group-item-quick-reply-space beforeAfter">${qReply[i].title}</p>`
+        for(let i in qReply){
+			if(/please choose/ig.test(qReply[i].title)){
+				data.color = "";
+				console.log("true");
+			}
+            if(qReply[i].platform =="facebook" && qReply[i].type == "2"){				
+                apiquickRepliesHtml +=`<p class="list-group-item-quick-reply-space${data.color}">`;
+								
+				if(qReply[i].title.indexOf("I have a recommendation for you.")>=0){
+					qReply[i].title = qReply[i].title.replace("I have a recommendation for you.","");
+					apiquickRepliesHtml +=`I have a recommendation for you.<br>${qReply[i].title}`;	
 				}else{
-					apiquickRepliesHtml+=	`<img style="border-radius:50%;float: left;margin-right: 10px;" width="40" height="40" src='avatar/blank.ico'/><p class="list-group-item-quick-reply-space">${qReply[i].title}</p>`
-					}
-                apiquickRepliesHtml +=`<div class="quick-replies-buttons">`
-				for(let j=0;j<qReply[i].replies.length;j++){					
+					apiquickRepliesHtml +=`${qReply[i].title}`;	
+				}				
+				apiquickRepliesHtml +=`</p><div class="quick-replies-buttons">`
+				for(let j=0;j<qReply[i].replies.length;j++){
 					apiquickRepliesHtml +=`<button type="button"  class="btn pmd-btn-outline pmd-ripple-effect btn-info .pmd-btn-fab apiQuickreplybtnPayload" data-apiquickRepliesPayload="${qReply[i].replies[j]}">${qReply[i].replies[j]}</button>`
 				}
             }
         }
         apiquickRepliesHtml +=`</div>`;
 		if(data.bottomIcon){
-			apiquickRepliesHtml+= `<p class="bot-res-timestamp-qr"><small> ${data.time}</small></p>`;
+			apiquickRepliesHtml+= `<p class="bot-res-timestamp-qr"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p>`;
 		}
 		apiquickRepliesHtml +=`</div></li>`;
         return apiquickRepliesHtml;
     }
     methods.carousel = (data, uniqueId) => {
-        var carousel = `<li class="list-group-item background-color-custom animated fadeInLeft">`
-		if(data.responseIndex){
-			carousel+=	`<img style="border-radius:50%;border:2px solid white;float: left;margin-right: 10px;" width="40" height="40" src='${settings.botAvatar}'/><div id="${uniqueId}" class="beforeAfter carousel slide pmd-card pmd-card-default pmd-z-depth carousel-custom" data-ride="false">`
-		}else{
-			carousel+=	`<img style="border-radius:50%;float: left;margin-right: 10px;" width="40" height="40" src='avatar/blank.ico'/><div id="${uniqueId}" class="carousel slide pmd-card pmd-card-default pmd-z-depth carousel-custom" data-ride="false">`
-		}        
-		
-        carousel+=`<!-- Carousel items -->
-            <div class="carousel-inner">`
+        var carousel = `<li class="list-group-item background-color-custom animated fadeInLeft">
+        <div id="${uniqueId}" class="carousel slide pmd-card pmd-card-default pmd-z-depth carousel-custom" data-ride="false">
+        <!-- Carousel items -->
+            <div class="carousel-inner">`;
         var index = 0;
 
         for (let i in data.payload) {
@@ -236,7 +248,7 @@ define(["utils","settings"], function (utils,settings) {
         <span class="sr-only">Next</span></a>
 	  </div><!--.Carousel--></div>`;
 	  if(data.bottomIcon){
-		carousel+=`<p style="bottom: 10px;" class="bot-res-timestamp-card"><small> ${data.time}</small></p>`;
+		carousel+=`<p style="bottom: 10px;" class="bot-res-timestamp-card"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src='${settings.botAvatar}'/>${data.time}</small></p>`;
 	  }
 	  carousel+=`</div></li>`;
 

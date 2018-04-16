@@ -267,18 +267,23 @@ float:left;
 #scrollbar-style::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #343434;
+	background-color: #red;
 	border-radius: 1px;
 }
 
 #scrollbar-style::-webkit-scrollbar
 {
 	width: 6px;
-	background-color: #343434;
+	background-color: #red;
 }
 
 #scrollbar-style::-webkit-scrollbar-thumb
 {
 	border-radius: 10px;
-	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(115, 47, 47)), color-stop(0.72, rgb(224, 120, 120)), color-stop(0.86, rgb(235, 38, 67)));
+	background-image: -webkit-gradient(linear,
+									   left bottom,
+									   left top,
+									   color-stop(0.44, rgb(122,153,217)),
+									   color-stop(0.72, rgb(73,125,189)),
+									   color-stop(0.86, rgb(28,58,148)));
 }    

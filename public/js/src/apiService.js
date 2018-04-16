@@ -52,7 +52,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 					let isAudio=false;
 					let audioUrl=null;
 					let isList = false;
-					let resIndex="0";
+					let color="";
 					let isFile=false;
 					let fileUrl=null;
 					let isReceipt=false;
@@ -82,34 +82,35 @@ function($, config, utils, messageTpl, cards, uuidv1){
 						callback(null, cardHTML);
 					}else{
 						if(response.result.fulfillment.messages){
+							let cl = response.result.fulfillment.messages.length-1;
 							for(let i in response.result.fulfillment.messages){
 								console.log('length',i);
-								bottomFlag = false;		
-								resIndex = 1;
-								if(i>0){
-									resIndex = 0;
-								}									
+								bottomFlag = false;								
 								if(i == response.result.fulfillment.messages.length-1){
 									bottomFlag = true;
 								}
-								console.log('resIndex',resIndex);
-								if(response.result.fulfillment.messages[i].type == 0 ){
-									let cardHTML = cards({
-										"payload": response.result.fulfillment.messages[i].speech,
-										"senderName": config.botTitle,
-										"senderAvatar": config.botAvatar,
-										"time": utils.currentTime(),
-										"responseIndex":resIndex,
-										"bottomIcon":bottomFlag,
-										"className": ''
-									}, "plaintext");
-									callback(null, cardHTML);
+								if(response.result.fulfillment.messages[i].type == 0){
+									if(response.result.fulfillment.messages[i].speech.trim().length<=0){
+										color = "";
+										cl--;
+									}else{
+										let cardHTML = cards({
+											"payload": response.result.fulfillment.messages[i].speech,
+											"senderName": config.botTitle,
+											"senderAvatar": config.botAvatar,
+											"time": utils.currentTime(),
+											"color":color,
+											"bottomIcon":bottomFlag,
+											"className": ''
+										}, "plaintext");
+										callback(null, cardHTML);
+									}
+								}
+								if(cl>0){
+									color = " textColor";
 								}
 								if(response.result.fulfillment.messages[i].type == 1){
 									count = count + 1;
-									if(count>=response.result.fulfillment.messages.length){
-										resIndex = 1;
-									}
 									hasbutton=(response.result.fulfillment.messages[i].buttons.length > 0) ? true :false;
 									isCardorCarousel = true;           
 								}
@@ -178,7 +179,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"payload": response.result.fulfillment.speech,
 								"senderName": config.botTitle,
 								"senderAvatar": config.botAvatar,
-								"responseIndex":resIndex,
+								"color":color,
 								"time": utils.currentTime(),
 								"bottomIcon":bottomFlag,
 								"className": ''
@@ -194,7 +195,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderName": config.botTitle,
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
-								"responseIndex":resIndex,
+								"color":color,
 								"bottomIcon":bottomFlag,
 								"buttons":hasbutton,
 								"className": ''
@@ -202,12 +203,12 @@ function($, config, utils, messageTpl, cards, uuidv1){
 							callback(null, cardHTML);
 						} 
 						else {
-							let carouselHTML = cards({								
+							let carouselHTML = cards({
+								
 									"payload": response.result.fulfillment.messages,
 									"senderName": config.botTitle,
 									"senderAvatar": config.botAvatar,
 									"time": utils.currentTime(),
-									"responseIndex":resIndex,
 									"buttons":hasbutton,
 									"bottomIcon":bottomFlag,
 									"className": ''
@@ -228,7 +229,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderName": config.botTitle,
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
-								"responseIndex":resIndex,
+								"color":color,
 								"bottomIcon":bottomFlag,
 								"className": ''
 						}, "quickreplies");
@@ -242,7 +243,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
 								"bottomIcon":bottomFlag,
-								"responseIndex":resIndex,
+								"color":color,
 								"className": ''
 						}, "quickreplyfromapiai");
 						callback(null, cardHTML);
@@ -253,7 +254,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderName": config.botTitle,
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
-								"responseIndex":resIndex,
+								"color":color,
 								"bottomIcon":bottomFlag,
 								"className": ''
 						}, "video");
@@ -266,7 +267,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
 								"bottomIcon":bottomFlag,
-								"responseIndex":resIndex,
+								"color":color,
 								"className": ''
 						}, "audio");
 						callback(null, cardHTML);
@@ -278,7 +279,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 								"senderAvatar": config.botAvatar,
 								"time": utils.currentTime(),
 								"bottomIcon":bottomFlag,
-								"responseIndex":resIndex,
+								"color":color,
 								"className": ''
 						}, "file");
 						callback(null, cardHTML);
@@ -289,7 +290,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 							"payload": listData,
 							"senderName": config.botTitle,
 							"senderAvatar": config.botAvatar,
-							"responseIndex":resIndex,
+							"color":color,
 							"bottomIcon":bottomFlag,
 							"time": utils.currentTime(),
 							"className": ''
@@ -301,7 +302,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 							"payload": receiptData,
 							"senderName": config.botTitle,
 							"senderAvatar": config.botAvatar,
-							"responseIndex":resIndex,
+							"color":color,
 							"time": utils.currentTime(),
 							"bottomIcon":bottomFlag,
 							"className": ''
@@ -315,7 +316,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 							"senderName": config.botTitle,
 							"senderAvatar": config.botAvatar,
 							"time": utils.currentTime(),
-							"responseIndex":resIndex,
+							"color":color,
 							"bottomIcon":bottomFlag,
 							"className": '',
 							"isWeb":$('#webchat').context.URL
@@ -327,7 +328,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 						let cardHTML = cards({
 							"payload": webviewData,							
 							"senderName": config.botTitle,
-							"responseIndex":resIndex,
+							"color":color,
 							"senderAvatar": config.botAvatar,
 							"time": utils.currentTime(),
 							"bottomIcon":bottomFlag,
@@ -343,7 +344,7 @@ function($, config, utils, messageTpl, cards, uuidv1){
 							"senderName": config.botTitle,
 							"senderAvatar": config.botAvatar,
 							"bottomIcon":bottomFlag,
-							"responseIndex":resIndex,
+							"color":color,
 							"time": utils.currentTime(),
 							"className": '',
 							"isWeb":$('#webchat').context.URL

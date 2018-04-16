@@ -66,75 +66,67 @@ define(['jquery', 'settings', 'apiService', 'utils'], function ($, config, apiSe
 			if (e.which == 13) {
 				sendMessage($(this), e);
 			}
-		});		
-		var eventAllow = "Italy,Europe,Tour Packages,Wonders of Italy *NEW* Summer 2018,May,June,July,August,September,October,November,December,8 - 14 days (50),14 + days (27),1 - 7 days (3),US$0-1000 (1),US$1001-$1500 (3),US$1501-$2000 (13),US$2001-$2500 (12),US$2501-$3000 (10),US$3001-$5000 (27),US$5001-$10000 (12),Easy Quote";
+		});
+
 		//Quick Replies payload button Click
-		$(document).on('click', '.QuickreplybtnPayload', function (e) {			
+		$(document).on('click', '.QuickreplybtnPayload', function (e) {
 			var payloadInput = $(this).data().quickrepliespayload;
-			if(eventAllow.indexOf(payloadInput)>=0){
-				processor.askBot(payloadInput, function (error, html) {
-					if (error) {
-						console.log("error occured while processing your Request") //change into some inline fancy display, show error in chat window.
-					}
-					if (html) {
-						msg_container.append(html);
-						utils.scrollSmoothToBottom($('div.chat-body'));
-					}
-				});
-			}
+			processor.askBot(payloadInput, function (error, html) {
+				if (error) {
+					console.log("error occured while processing your Request") //change into some inline fancy display, show error in chat window.
+				}
+				if (html) {
+					msg_container.append(html);
+					utils.scrollSmoothToBottom($('div.chat-body'));
+				}
+			});
 			e.preventDefault();
 		});
 
 		$(document).on('click', '.cardresponsepayload', function (e) {
 			var payloadInput = $(this).data().cardpayloadbutton;
-			if(eventAllow.indexOf(payloadInput)>=0){
-				processor.askBot(payloadInput, function (error, html) {
-					if (error) {
-						console.log("error occured while processing your Request") //change into some inline fancy display, show error in chat window.
-					}
-					if (html) {
-						msg_container.append(html);
-						utils.scrollSmoothToBottom($('div.chat-body'));
-					}
-				});
-			}
+			processor.askBot(payloadInput, function (error, html) {
+				if (error) {
+					console.log("error occured while processing your Request") //change into some inline fancy display, show error in chat window.
+				}
+				if (html) {
+					msg_container.append(html);
+					utils.scrollSmoothToBottom($('div.chat-body'));
+				}
+			});
 			e.preventDefault();
 		});
 
 		$(document).on('click', '.caroselresponsepayload', function (e) {
 			var payloadInput = $(this).data().carouselpayloadbutton;
 			console.log('Button Payload' + payloadInput);
-			if(eventAllow.indexOf(payloadInput)>=0){
-				processor.askBot(payloadInput, function (error, html) {
-					if (error) {
-						console.log("error occured while processing your Request") //change into some inline fancy display, show error in chat window.
-					}
-					if (html) {
-						msg_container.append(html);
-						utils.scrollSmoothToBottom($('div.chat-body'));
+			processor.askBot(payloadInput, function (error, html) {
+				if (error) {
+					console.log("error occured while processing your Request") //change into some inline fancy display, show error in chat window.
+				}
+				if (html) {
+					msg_container.append(html);
+					utils.scrollSmoothToBottom($('div.chat-body'));
 
-					}
-				});
-			}
+				}
+			});
 			e.preventDefault();
 
         });
         
         $(document).on('click', '.apiQuickreplybtnPayload', function (e) {
 			var payloadInput = $(this).data().apiquickrepliespayload;
-			if(eventAllow.indexOf(payloadInput)>=0){
-				$('.apiQuickreplybtnPayload').hide();
-				processor.askBot(payloadInput, function (error, html) {
-					if (error) {
-						console.log("error occured while processing your Request") //change into some inline fancy display, show error in chat window.
-					}
-					if (html) {
-						msg_container.append(html);
-						utils.scrollSmoothToBottom($('div.chat-body'));
-					}
-				});
-			}
-			e.preventDefault();			
+			$('.apiQuickreplybtnPayload').hide();
+			processor.askBot(payloadInput, function (error, html) {
+				if (error) {
+					console.log("error occured while processing your Request") //change into some inline fancy display, show error in chat window.
+				}
+				if (html) {
+					msg_container.append(html);
+					utils.scrollSmoothToBottom($('div.chat-body'));
+				}
+			});
+			e.preventDefault();
 		});   
 	});
 
